@@ -2,6 +2,8 @@
 
 A client-approval portal for solo consultants that tracks every deliverable through timestamped records of when it was sent, viewed, approved, or left unanswered.
 
+[Live demo](https://verori.vercel.app) · [Report an issue](https://github.com/mawmao/verori/issues)
+
 ---
 
 ## What it is
