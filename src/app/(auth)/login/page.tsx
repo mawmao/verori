@@ -1,5 +1,6 @@
 import { VeroriIcon } from '@/components/icon/verori'
 import { LoginForm } from '@/features/auth/components/client/login-form'
+import Link from 'next/link'
 
 export default function Login() {
   return (
@@ -20,9 +21,21 @@ export default function Login() {
 
         <LoginForm />
 
-        <p className="text-xs text-zinc-500 w-full text-center mt-4 leading-relaxed">
+        <p className="text-xs text-zinc-500 dark:text-zinc-400 w-full text-center mt-4 leading-relaxed">
           By continuing, you agree to VERORI's <br />
-          <a href="#" className="underline hover:text-zinc-300">Terms of Service</a> and <a href="#" className="underline hover:text-zinc-300">Privacy Policy</a>.
+          <Link
+            href="/terms"
+            className="underline decoration-zinc-300 dark:decoration-zinc-700 underline-offset-2 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors"
+          >
+            Terms of Service
+          </Link>
+          {" and "}
+          <Link
+            href="/privacy"
+            className="underline decoration-zinc-300 dark:decoration-zinc-700 underline-offset-2 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors"
+          >
+            Privacy Policy
+          </Link>.
         </p>
 
       </div>
