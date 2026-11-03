@@ -5,7 +5,19 @@ The reasoning behind Verori's shape. Each entry records a decision, the alternat
 This file exists because the code shows *what* was built, but not *why*.
 A reader, mostly future me, should be able to understand the product's constraints without reverse-engineering them from the source.
 
----
+
+# User Research & Validation
+
+Before writing code, I conducted qualitative research across freelancing and agency communities (Reddit) to validate the ghosting problem and test the proposed solution.
+
+1. Login friction. Multiple users noted that client portals fail because clients refuse to create yet another account. A single tokenized link is the preferred alternative.
+
+2. Freelancers frequently hand over final deliverables before payment and get ghosted. While Verori doesn't process payments, providing a timestamped record of delivery and viewing gives consultants the data they need to pause work or issue a final demand.
+
+3. Some argue software cannot fix client behavior. I agree. Verori doesn't force a client to approve, it simply makes the delivery, viewing, and response mathematically visible so the consultant doesn't waste billable hours wondering.
+
+4. There are similar paid products found which focuses on inbound document collection (tax docs, receipts). Verori differentiates by focusing on outbound deliverable sign-off.
+
 
 # Part 1 - Product decisions
 
@@ -27,7 +39,6 @@ A reader, mostly future me, should be able to understand the product's constrain
     A forwarded link is accessible to anyone holding it.
     For a deliverable-approval workflow, that risk is smaller than the risk of the client not responding at all.
 
----
 
 ## 2. Token-based access, not resource-ID access
 
@@ -46,7 +57,6 @@ A reader, mostly future me, should be able to understand the product's constrain
     Tokens can be revoked per portal, not per viewer.
     That granularity is sufficient for the use case and keeps the model simple.
 
----
 
 ## 3. Discrete sign-off with a reason, not commenting
 
@@ -74,7 +84,7 @@ A reader, mostly future me, should be able to understand the product's constrain
     It is a reason, not a conversation.
     This is deliberate: it keeps the product a razor for sign-off instead of a bloated collaboration suite.
 
----
+
 
 ## 4. Visibility is the product
 
@@ -93,7 +103,7 @@ A reader, mostly future me, should be able to understand the product's constrain
 * Trade-off:
     "Viewed, no response" can feel pointed. It is also the most useful sentence in the product.
 
----
+
 
 ## 5. Evidence, not enforcement
 
@@ -120,7 +130,7 @@ Boundary note:
     Payment-status checks (does the consultant's own Stripe say this invoice is paid?) are a different thing from payment *processing*.
     If that feature is ever built, it must use the consultant's own account and Verori must never hold funds.
 
----
+
 
 ## 6. Niche-flavored, not niche-locked
 
@@ -144,7 +154,7 @@ Why this segment:
     Marketing/SEO consultants clear all four.
     Video editors, UX/UI designers, and copywriters fail the first two; branding consultants fail recurrence; financial consultants fail friction.
 
----
+
 
 ## 7. Multi-tenant isolation as a visible design choice
 
@@ -163,7 +173,7 @@ Why this segment:
 * Trade-off:
     Slightly more boilerplate in the data layer. Worth it for the clarity.
 
----
+
 
 ## 8. Reminders are manual before automatic
 
@@ -182,7 +192,7 @@ Why this segment:
     Manual reminders mean the consultant still has to remember to nudge.
     That's an acceptable cost for keeping the product on the consultant's side of the relationship.
 
----
+
 
 ## 9. Notifications go to the consultant, not the client (MVP)
 
@@ -200,7 +210,7 @@ Why this segment:
     The consultant still copies a link into email.
     If real users say this is the friction that stops them, sending-on-behalf moves up the roadmap.
 
----
+
 
 
 # Part 2 - Scope decisions
@@ -284,7 +294,6 @@ Also relevant (not competitors, but owners of adjacent ground):
 Verori does not compete with them. It handles the sign-off that happens after review is done.
 This is why "discrete sign-off with a reason, not commenting" (#3) is a scope decision, not a limitation.
 
----
 
 # Changelog
 
