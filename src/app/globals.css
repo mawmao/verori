@@ -8,26 +8,30 @@
 }
 
 @utility text-error {
-  @apply text-sm w-full text-center text-red-500 dark:text-red-400;
+    @apply w-full text-center text-sm text-red-500;
+
+    @variant dark {
+        @apply text-red-400;
+    }
 }
 
 @utility text-success {
-  @apply text-sm w-full text-center text-teal-600 dark:text-teal-400;
+    @apply w-full text-center text-sm text-teal-600;
+
+    @variant dark {
+        @apply text-teal-400;
+    }
 }
 
 @utility debug {
-    outline-style: dashed;
-    outline-width: 2px;
-    outline-color: red;
+    @apply outline-2 outline-dashed outline-red-500;
 }
 
 @utility h-divider {
-    flex: 1;
-    height: 1px;
-    background-color: var(--color-zinc-200);
+    @apply flex-1 h-px bg-zinc-200;
 
-    &:where(.dark, .dark *) {
-        background-color: var(--color-zinc-800);
+    @variant dark {
+        @apply bg-zinc-800;
     }
 }
 
