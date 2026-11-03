@@ -40,3 +40,8 @@
 - [ ] "Deemed approved after N days" policy
 
 - [ ] Variant selection for designers (e.g., "Approve Option B")
+
+
+## Future
+
+- [ ] Terms of Service & Privacy Policy
