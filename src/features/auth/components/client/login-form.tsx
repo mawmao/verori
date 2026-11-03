@@ -83,7 +83,9 @@ export function LoginForm() {
             <Button
               type="button"
               variant="outline"
-              disabled={isLoading}
+              // disabled={isLoading}
+              // disabling temporarily since it is still not implemented
+              disabled={true}
               onClick={() => handleOAuthLogin("google")}
             >
               <GoogleIcon />
@@ -93,7 +95,9 @@ export function LoginForm() {
             <Button
               type="button"
               variant="outline"
-              disabled={isLoading}
+              // disabled={isLoading}
+              // disabling temporarily since it is still not implemented
+              disabled={true}
               onClick={() => handleOAuthLogin("azure")}
             >
               <MicrosoftIcon />
