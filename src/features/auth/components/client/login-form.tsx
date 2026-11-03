@@ -81,7 +81,7 @@ export function LoginForm() {
       )}
 
       {message && (
-        <p className={`text-sm w-full text-center  ${message.type === 'error' ? 'text-red-500 dark:text-red-400' : 'text-teal-600 dark:text-teal-400'}`}>
+        <p className={message.type === "error" ? "text-error" : "text-success"}>
           {message.text}
         </p>
       )}
