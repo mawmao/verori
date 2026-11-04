@@ -204,13 +204,53 @@ Why this segment:
     Verori sends the deliverable email to the client on the consultant's behalf.
 
 * Why this won:
-    Sending the email ourselves means fighting spam filters and legal compliance right out of the gate. It also strips the consultant of control over their client relationship. Verori's only job is to generate the link; how it gets delivered doesn't matter.
+    Sending the email ourselves means fighting spam filters and legal compliance right out of the gate.
+    It also strips the consultant of control over their client relationship.
+    Verori's only job is to generate the link; how it gets delivered doesn't matter.
 
 * Trade-off:
     The consultant still copies a link into email.
     If real users say this is the friction that stops them, sending-on-behalf moves up the roadmap.
 
 
+## 10. Automation via Webhooks, not native integrations
+
+* Decision:
+    Instead of building native invoicing, email marketing, or CRM tools into Verori, the paid tiers will support outbound Webhooks (and Zapier/Make integrations).
+
+* Alternatives considered:
+    Building a native Stripe invoicing flow; building an internal email composer.
+
+* Why this won:
+    Building native integrations violates the "One Job" principle.
+    By firing a webhook when a status changes to `approved`, the consultant can connect Verori to *their* preferred tools (e.g., Stripe, QuickBooks, Slack, Asana).
+    It turns Verori from a passive tracker into an active workflow trigger without bloating the app.
+
+* Trade-off:
+    Requires the consultant to set up an automation tool (like Zapier), which creates a slight technical hurdle.
+    However, agencies already use these tools and will gladly pay a premium for automation.
+
+
+## 11. API-First Future & AI Agent Support (MCP)
+
+* Decision:
+    While the MVP is a web application for human consultants, the underlying architecture will
+    eventually be exposed via API and MCP (Model Context Protocol) so AI agents and other SaaS
+    platforms can automate the approval workflow.
+
+* Alternatives considered:
+    Staying strictly as a closed, human-only web app.
+
+* Why this won:
+    The future of work involves AI agents generating deliverables.
+    However, clients still require a human-in-the-loop to verify the work.
+    Verori can become the definitive "verifiable checkpoint" for AI-generated work, allowing
+    agents to create portals, track timestamps, and respond to change requests via webhooks.
+    This shifts Verori from a micro-SaaS to B2B infrastructure.
+
+* Trade-off:
+    Building an API/agent layer requires strict authentication (API keys) and rate limiting, which adds overhead.
+    This is deferred until the web UI for human consultants is validated.
 
 
 # Part 2 - Scope decisions
@@ -235,6 +275,8 @@ Why this segment:
 - Delivery record export (PDF)
 - Engagement summary export
 - Context-note templates
+- Show a watermarked preview / low-res version until the client clicks Approve (adds leverage)
+- Terms of Service & Privacy Policy
 
 ## Later - only if users ask
 
@@ -244,9 +286,15 @@ Why this segment:
 - Full activity-log / dispute-pack export
 - Variant selection for designers ("Approve Option B")
 - Multi-approver flows
-- Custom domain on the client page
-- API, webhooks, Zapier/Make/n8n listing
-- Team seats
+- Automated Webhooks (Zapier/Make) - trigger external actions (invoicing, Slack, task creation) when a portal is approved or changes are requested.
+- Team seats for agencies with multiple account managers.
+
+## Future (Infrastructure)
+
+- Custom domain on the client page (White-label)
+- Public REST API & Webhooks (for other SaaS to embed Verori)
+- MCP (Model Context Protocol) Server (for AI Agents)
+
 
 ## Never
 
@@ -305,3 +353,6 @@ This is why "discrete sign-off with a reason, not commenting" (#3) is a scope de
 - v0.2 - Added scope decisions (MVP / v1.1 / Later / Never)
     with rationale, competitive landscape, and the manual-reminders
     and notification-channel decisions.
+
+- v0.3 - Added user research validation, webhook automation decisions,
+    AI/API infrastructure vision, and updated scope tiers.
