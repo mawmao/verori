@@ -1,11 +1,19 @@
-
 # ROADMAP
+
+## Completed
+
+- [x] Route protection (middleware) & session management
+
+- [x] Supabase Magic Link & OTP Authentication
+
+- [x] Database schema (Portals, Files, Activity Logs)
+
+- [x] Initial Database Migration & RLS Policies
+
 
 ## MVP (Current Build)
 
 Phase 1: Foundation & Creation
-
-- [x] Route protection (middleware) & session management
 
 - [ ] Database schema (Portals, Files, Activity Logs)
 
@@ -27,9 +35,6 @@ Phase 2: The Client Experience
 
 Phase 3: Consultant Experience
 
-
-- [x] Supabase Magic Link & OTP Authentication
-
 - [ ] OAuth (Google, Microsoft) Setup
 
 - [ ] Consultant dashboard (list portals, status badges)
@@ -45,13 +50,20 @@ Phase 3: Consultant Experience
 
 - [ ] Manual "Send reminder" button
 
-- [ ] Delivery record export (PDF)
+- [ ] Delivery record export (PDF) *(The "Prove It" feature)*
 
 - [ ] Client-page branding (logo, accent color)
 
-- [ ] Terms of Service & Privacy Policy
+- [ ] Enable OAuth (Google, Microsoft)
+
+- [ ] Static Terms of Service & Privacy Policy pages
+
+- [ ] Watermarked previews,  display low-res version until approved
+
 
 ## Later (Only if users ask)
+
+- [ ] Automated Webhooks (Zapier/Make: trigger invoices, Slack, tasks on approval)
 
 - [ ] Engagement summary export
 
@@ -61,6 +73,17 @@ Phase 3: Consultant Experience
 
 - [ ] "Deemed approved after N days" policy
 
-- [ ] Variant selection for designers (e.g., "Approve Option B")
+- [ ] Variant selection for designers (e.g. "Approve Option B")
+
+- [ ] Team seats / multi-user agencies
+
+
+## Future (Infrastructure & B2B2B)
+
+- [ ] White-label client portals (Custom domains via Vercel SDK)
+
+- [ ] Public REST API & Webhooks (for other SaaS to embed Verori)
+
+- [ ] MCP (Model Context Protocol) Server for AI Agents
 
 
