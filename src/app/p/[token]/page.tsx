@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 const features = [
   {
     title: "Zero Friction",
@@ -17,8 +19,16 @@ const features = [
   },
 ];
 
-export default async function ClientPortal({ params }: { params: Promise<{ token: string }> }) {
+async function Token({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
+  return (
+    <p className="text-xs text-zinc-600 font-mono">
+      Token: {token}
+    </p>
+  )
+}
+
+export default function ClientPortal({ params }: { params: Promise<{ token: string }> }) {
 
   return (
     <main className="h-screen flex flex-col flex-1 items-center justify-center bg-zinc-950">
@@ -62,9 +72,9 @@ export default async function ClientPortal({ params }: { params: Promise<{ token
         </div>
 
         <div className="w-full text-center mt-4">
-          <p className="text-xs text-zinc-600 font-mono">
-            Token: {token}
-          </p>
+          <Suspense fallback={<p>Token:</p>}>
+            <Token params={params} />
+          </Suspense>
         </div>
       </div>
     </main>
