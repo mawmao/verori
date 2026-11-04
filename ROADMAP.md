@@ -8,18 +8,18 @@
 
 - [x] Database schema (Portals, Files, Activity Logs)
 
+- [s] Supabase Storage bucket setup (for deliverable files)
+
 - [x] Initial Database Migration & RLS Policies
+
+- [x] Create portal form (Client name, File upload, Context note)
+
+- [x] Consultant dashboard (list portals, status badges)
 
 
 ## MVP (Current Build)
 
 Phase 1: Foundation & Creation
-
-- [ ] Database schema (Portals, Files, Activity Logs)
-
-- [ ] Supabase Storage bucket setup (for deliverable files)
-
-- [ ] Create portal form (Client name, File upload, Context note)
 
 - [ ] Token link generation (save unguessable token to DB)
 
@@ -35,13 +35,11 @@ Phase 2: The Client Experience
 
 Phase 3: Consultant Experience
 
-- [ ] OAuth (Google, Microsoft) Setup
-
-- [ ] Consultant dashboard (list portals, status badges)
-
 - [ ] Portal detail view (preview file, render activity log)
 
 - [ ] "Copy link" functionality
+
+- [ ] Enable OAuth (Google, Microsoft)
 
 
 ## v1.1 (Next)
@@ -53,8 +51,6 @@ Phase 3: Consultant Experience
 - [ ] Delivery record export (PDF) *(The "Prove It" feature)*
 
 - [ ] Client-page branding (logo, accent color)
-
-- [ ] Enable OAuth (Google, Microsoft)
 
 - [ ] Static Terms of Service & Privacy Policy pages
 
