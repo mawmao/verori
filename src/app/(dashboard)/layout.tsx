@@ -1,26 +1,15 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
+import { DashboardLayoutHeader, HeaderSkeleton } from "./_components/header";
+import { Suspense } from "react";
 
-import { LogoutButton } from "@/features/auth";
-
-export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
-
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-
-  if (!user) {
-    redirect('/login')
-  }
-
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <div className="fixed top-4 left-4 right-4 flex justify-between">
-        <LogoutButton />
-        <span className="text-sm text-zinc-500 hidden sm:inline-block">
-          {user.email}
-        </span>
+    <div className="min-h-screen flex flex-col bg-zinc-50 dark:bg-zinc-950 transition-colors">
+      <Suspense fallback={<HeaderSkeleton />}>
+        <DashboardLayoutHeader />
+      </Suspense>
+      <div className="flex-1 flex flex-col">
+        {children}
       </div>
-      {children}
-    </>
+    </div>
   )
 }

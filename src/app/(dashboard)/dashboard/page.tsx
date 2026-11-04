@@ -1,63 +1,38 @@
-import { Button } from "@/components/button";
-import { VeroriIcon } from "@/components/icon/verori";
+import { Suspense } from "react"
+import { CreatePortalDialog } from "@/features/portal/components/create-portal-dialog"
+import { Status } from "@/features/portal"
+import { PortalStats, StatsSkeleton } from "./_components/portal-stats"
+import { ListSkeleton, PortalList } from "./_components/portal-list"
 
-const features = [
-  {
-    title: "Deliverable Tracker",
-    description: "View every sent deliverable and its current status in one unified table.",
-  },
-  {
-    title: "Visual Statuses",
-    description: "Instantly identify if a client has viewed, approved, or requested changes.",
-  },
-  {
-    title: "Quick Launch",
-    description: "Generate a new secure approval link without navigating away from the dashboard.",
-  },
-  {
-    title: "Activity Snapshot",
-    description: "See a relative timestamp of the exact moment the client last interacted with the portal.",
-  },
-];
+interface Props {
+  searchParams: Promise<{ status?: Status }>
+}
 
-
-export default function Dashboard() {
+export default function Dashboard({ searchParams }: Props) {
   return (
-    <main className="h-screen flex flex-col flex-1 items-center justify-center bg-zinc-50 dark:bg-zinc-950 transition-colors">
-      <div className="flex flex-col gap-4 items-start text-left">
-        <div className='flex gap-2 items-center'>
-          <VeroriIcon className='size-8' />
-          <h1 className="text-4xl font-semibold tracking-tighter uppercase text-zinc-950 dark:text-zinc-50 flex items-center gap-4">
-            Verori
+    <main className="flex-1 w-full max-w-5xl mx-auto px-6 py-10 sm:py-12">
+
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 p-6 sm:p-8 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
+            Approvals
           </h1>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+            Manage your client deliverables and track their status.
+          </p>
         </div>
-        <p className="max-w-[45ch] text-lg text-zinc-500 dark:text-zinc-400">
-          A client-approval portal that tracks every deliverable through timestamped records of when it was sent, viewed, approved, or left unanswered.
-        </p>
-
-
-        <div className="w-full mt-4">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-4">
-            Features
-          </h2>
-
-          <ul className="flex flex-col divide-y divide-zinc-200 dark:divide-zinc-800 border-y border-zinc-200 dark:border-zinc-800">
-            {features.map((feature) => (
-              <li key={feature.title} className="py-4">
-                <h3 className="text-sm font-semibold text-zinc-500 dark:text-zinc-400">
-                  {feature.title}
-                </h3>
-                <p className="text-sm leading-6 text-zinc-500 mt-1">
-                  {feature.description}
-                </p>
-              </li>
-            ))}
-          </ul>
+        <div className="w-full sm:w-auto">
+          <CreatePortalDialog isIcon/>
         </div>
-        <Button >
-          New Portal
-        </Button>
       </div>
+
+      <Suspense fallback={<StatsSkeleton />}>
+        <PortalStats searchParams={searchParams} />
+      </Suspense>
+
+      <Suspense fallback={<ListSkeleton />}>
+        <PortalList searchParams={searchParams} />
+      </Suspense>
     </main>
   )
 }
