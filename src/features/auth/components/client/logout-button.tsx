@@ -1,25 +1,24 @@
 'use client'
 
+import { Button } from '@/components/button'
 import { createClient } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
 
-export function LogoutButton() {
+export function LogoutButton({ className, ...props }: React.ComponentProps<"button">) {
   const supabase = createClient()
-  const router = useRouter()
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
-
-    router.push('/login')
-    router.refresh()
+    window.location.href = '/login'
   }
 
   return (
-    <button
+    <Button
       onClick={handleLogout}
-      className="text-sm hover:opacity-90 transition-opacity cursor-pointer"
+      variant="ghost"
+      className={`text-sm hover:opacity-90 transition-opacity cursor-pointer ${className}`}
+      {...props}
     >
       Log out
-    </button>
+    </Button>
   )
 }
