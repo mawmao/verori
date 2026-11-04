@@ -1,10 +1,16 @@
-# Verori
+<div align="center">
+  <img src="https://raw.githubusercontent.com/mawmao/verori/main/public/web-app-manifest-512x512.png" alt="Verori Logo" width="48" height="48" style="border-radius: 0.5rem;"/>
+  <h1 style="margin-top: 14px;">Verori</h1>
+  <p>
+  A client-approval portal for solo consultants that tracks every deliverable through timestamped records of when it was sent, viewed, approved, or left unanswered.
+ </p>
 
-A client-approval portal for solo consultants that tracks every deliverable through timestamped records of when it was sent, viewed, approved, or left unanswered.
+  <p>
+    <a href="https://verori.vercel.app">Live Demo</a> ·
+    <a href="https://github.com/mawmao/verori/issues">Report an issue</a>
+  </p>
+</div>
 
-[Live demo](https://verori.vercel.app) · [Report an issue](https://github.com/mawmao/verori/issues)
-
----
 
 ## What it is
 
@@ -20,7 +26,7 @@ It is built specifically for independent marketing, SEO, and content consultants
 
 1. Create - upload a deliverable, add a one-line context note, name the client. Three fields.
 2. Send -  Verori generates a branded, token-based link. Paste it into email or Slack.
-3. Approve - Approve - the client opens the link, sees the file, and responds with an approval or a brief explanation of what needs changing. No login required.
+3. Approve - the client opens the link, sees the file, and responds with an approval or a brief explanation of what needs changing. No login required.
 4. Record - every action is timestamped: created, viewed, approved, changes requested, reminder sent.
 
 ## Why it exists
