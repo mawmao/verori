@@ -11,7 +11,7 @@ type ButtonProps<C extends React.ElementType = "button"> = ButtonOwnProps & { as
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-zinc-950 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-950 w-full py-2 mt-2 text-center rounded-sm text-xs font-medium hover:bg-zinc-800 dark:hover:bg-zinc-200 disabled:opacity-50 transition-colors cursor-pointer flex items-center justify-center gap-2",
+    "bg-zinc-950 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-950 w-full py-2 px-4 mt-2 text-center rounded-sm text-xs font-medium hover:bg-zinc-800 dark:hover:bg-zinc-200 disabled:opacity-50 transition-colors cursor-pointer flex items-center justify-center gap-2",
   outline:
     "cursor-pointer w-full flex items-center justify-center gap-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 py-2.5 rounded-sm text-xs font-medium hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-zinc-50 disabled:opacity-50 transition-colors",
   ghost:
