@@ -110,7 +110,7 @@ begin
     values (
         new.id,
         new.raw_user_meta_data->>'full_name',
-        new.raw_user_meta_data->>'branding_config'
+        new.raw_user_meta_data->'branding_config'
     );
     return new;
 end;
@@ -131,7 +131,6 @@ create trigger on_auth_user_created
 create function public.handle_updated_at()
 returns trigger
 language plpgsql
-set search_path = ''
 as $$
 begin
     new.updated_at = now();
