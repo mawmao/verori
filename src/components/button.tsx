@@ -9,13 +9,14 @@ type ButtonOwnProps = {
 
 type ButtonProps<C extends React.ElementType = "button"> = ButtonOwnProps & { as?: C } & Omit<React.ComponentPropsWithoutRef<C>, keyof ButtonOwnProps | "as">
 
+const baseClasses = "cursor-pointer w-full text-xs transition-colors"
+
+const boxedClasses = "py-2.5 flex items-center justify-center gap-2 rounded-sm font-medium disabled:opacity-50"
+
 const variantClasses: Record<ButtonVariant, string> = {
-  primary:
-    "bg-zinc-950 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-950 w-full py-2 px-4 mt-2 text-center rounded-sm text-xs font-medium hover:bg-zinc-800 dark:hover:bg-zinc-200 disabled:opacity-50 transition-colors cursor-pointer flex items-center justify-center gap-2",
-  outline:
-    "cursor-pointer w-full flex items-center justify-center gap-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 py-2.5 rounded-sm text-xs font-medium hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-zinc-50 disabled:opacity-50 transition-colors",
-  ghost:
-    "cursor-pointer text-xs text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-300 mt-2 text-center w-full transition-colors",
+  primary: `${boxedClasses} bg-zinc-950 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-950 w-full text-center hover:bg-zinc-800 dark:hover:bg-zinc-200`,
+  outline: `${boxedClasses} bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-zinc-50`,
+  ghost: "text-xs text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-300 text-center w-full transition-colors cursor-pointer",
 }
 
 export function Button<C extends React.ElementType = "button">({
@@ -36,7 +37,7 @@ export function Button<C extends React.ElementType = "button">({
       {...(isButton
         ? { disabled: isDisabled }
         : { "aria-disabled": isDisabled })}
-      className={`${variantClasses[variant]}${className ? ` ${className}` : ""}`}
+      className={`${baseClasses} ${variantClasses[variant]}${className ? ` ${className}` : ""}`}
       {...props}
     >
       {isLoading && variant === "primary" && <Spinner />}
