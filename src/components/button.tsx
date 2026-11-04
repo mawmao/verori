@@ -2,11 +2,12 @@ import { Spinner } from "@/components/spinner"
 
 type ButtonVariant = "primary" | "outline" | "ghost"
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+type ButtonOwnProps = {
   variant?: ButtonVariant
   isLoading?: boolean
 }
+
+type ButtonProps<C extends React.ElementType = "button"> = ButtonOwnProps & { as?: C } & Omit<React.ComponentPropsWithoutRef<C>, keyof ButtonOwnProps | "as">
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
@@ -17,22 +18,31 @@ const variantClasses: Record<ButtonVariant, string> = {
     "cursor-pointer text-xs text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-300 mt-2 text-center w-full transition-colors",
 }
 
-export function Button({
+export function Button<C extends React.ElementType = "button">({
+  as,
   variant = "primary",
   isLoading,
   disabled,
   className,
   children,
   ...props
-}: ButtonProps) {
+}: ButtonProps<C>) {
+  const Component = (as ?? "button") as React.ElementType
+  const isButton = Component === "button"
+  const isDisabled = disabled || isLoading
+
   return (
-    <button
-      disabled={disabled || isLoading}
+    <Component
+      {...(isButton
+        ? { disabled: isDisabled }
+        : { "aria-disabled": isDisabled })}
       className={`${variantClasses[variant]}${className ? ` ${className}` : ""}`}
       {...props}
     >
       {isLoading && variant === "primary" && <Spinner />}
       {children}
-    </button>
+    </Component>
   )
 }
+
+export type { ButtonProps, ButtonVariant }
