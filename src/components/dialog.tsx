@@ -85,7 +85,7 @@ export function DialogContent({ children, className }: DialogContentProps) {
         aria-hidden="true"
         onClick={() => setIsOpen(false)}
         className={cn(
-          "fixed inset-0 z-40 bg-black/50",
+          "fixed inset-0 z-40 bg-black/5 backdrop-blur-xs",
           "transition-opacity duration-200 ease-out motion-reduce:transition-none",
           visible ? "opacity-100" : "opacity-0"
         )}
@@ -97,8 +97,8 @@ export function DialogContent({ children, className }: DialogContentProps) {
       >
         <div
           className={cn(
-            "pointer-events-auto w-full max-w-lg overflow-hidden rounded-lg border shadow-xl",
-            "border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950",
+            "pointer-events-auto w-full max-w-lg overflow-hidden rounded-lg border shadow-xs",
+            "border-zinc-300 border-dashed bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950",
             "transition-all duration-200 ease-out motion-reduce:transition-none",
             visible
               ? "translate-y-0 scale-100 opacity-100"
