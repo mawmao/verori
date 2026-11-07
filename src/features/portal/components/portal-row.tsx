@@ -11,8 +11,9 @@ export function PortalRow({ portal }: Props) {
   return (
     <li>
       <Link
-        href={`/dashboard/portal/${portal.id}`}
-        className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl hover:border-zinc-400 dark:hover:border-zinc-500 transition-all gap-3 sm:gap-6"
+        href={`/dashboard/?portal=${portal.id}`}
+        prefetch={true}
+        className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 verori-border rounded-xl hover:border-zinc-400 dark:hover:border-zinc-500 transition-all gap-3 sm:gap-6"
       >
         <div className="flex flex-col gap-1 min-w-0">
           <span className="font-medium text-sm text-zinc-950 dark:text-zinc-50 group-hover:text-zinc-600 dark:group-hover:text-zinc-400 transition-colors truncate">
