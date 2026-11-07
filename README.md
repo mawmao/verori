@@ -2,22 +2,14 @@
   <img src="https://raw.githubusercontent.com/mawmao/verori/main/public/web-app-manifest-512x512.png" alt="Verori Logo" width="48" height="48" style="border-radius: 0.5rem;"/>
   <h1>VERORI</h1>
   <p>
-  A client-approval portal for solo consultants that tracks every deliverable through timestamped records of when it was sent, viewed, approved, or left unanswered.
- </p>
+    A client-approval portal for solo consultants that tracks every deliverable through timestamped records of when it was sent, viewed, approved, or left unanswered.
+  </p>
 
   <p>
-    <a href="https://verori.vercel.app">Live Demo</a> ·
+    <a href="https://verori.vercel.app">Live Demo</a> <em>(Paused until custom domain is purchased)</em> ·
     <a href="https://github.com/mawmao/verori/issues">Report an issue</a>
   </p>
 </div>
-
-## Status
-
-Early development.  The MVP is currently in active development.
-Email notifications, exports, and billing are planned for future releases. See DECISIONS.md for what ships next.
-
-This is a portfolio project exploring client-approval workflows.
-The hosted version is the maintained product; the repository is shared for reading and learning.
 
 ## What it is
 
@@ -33,7 +25,7 @@ It is built specifically for independent marketing, SEO, and content consultants
 
 1. Create - upload a deliverable, add a one-line context note, name the client. Three fields.
 2. Send -  Verori generates a branded, token-based link. Paste it into email or Slack.
-3. Approve - the client opens the link, sees the file, and responds with an approval or a brief explanation of what needs changing. No login required.
+3. Approve - Approve - the client opens the link, sees the file, and responds with an approval or a brief explanation of what needs changing. No login required.
 4. Record - every action is timestamped: created, viewed, approved, changes requested, reminder sent.
 
 ## Why it exists
@@ -45,21 +37,28 @@ Read the full origin story and product reasoning in [DECISIONS.md](DECISIONS.md)
 
 ## Scope
 
-In scope:
-
-- Token-based client links. No client account
+**In scope:**
+- Token-based client links (no client account required)
 - File preview (PDF, images, download fallback)
 - Approve / Request Changes (with a required reason on rejection) with timestamps
 - Consultant dashboard with status and activity log
 - Consultant-initiated reminders
 - Exportable delivery record and engagement summary (post-MVP)
 
-Out of scope:
-
+**Out of scope:**
 - Invoicing, contracts, CRM, project management
 - Escrow, payment processing, or releasing funds
-- Any claim of legal enforceability. Verori produces documentation, not a binding signature
+- Any claim of legal enforceability (Verori produces documentation, not a binding signature)
 - Inline commenting or annotation (that's Figma's, Google Docs', and Frame.io's job)
 - Marketplace sellers. Platforms like Fiverr and Upwork already provide the approval mechanic
 
 
+## Status
+
+Early development.  The MVP is currently in active development.
+Email notifications, exports, and billing are planned for future releases. See DECISIONS.md for what ships next.
+
+This is a portfolio project exploring client-approval workflows.
+The hosted version is the maintained product; the repository is shared for reading and learning.
+
+This is a portfolio project exploring client-approval workflows. The hosted version is the maintained product; the repository is shared for reading and learning.
