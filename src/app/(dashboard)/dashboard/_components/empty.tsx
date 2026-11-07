@@ -10,7 +10,7 @@ export function DashboardEmpty() {
   ]
 
   return (
-    <div className="flex-1 mt-16 w-full max-w-xl mx-auto px-6 flex flex-col items-center text-center">
+    <div className="flex-1 mt-8 w-full max-w-xl mx-auto px-6 flex flex-col items-center text-center">
       <div className="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-full mb-6">
         <CheckCircleIcon className="size-7 text-zinc-400 dark:text-zinc-500" />
       </div>
