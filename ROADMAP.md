@@ -1,6 +1,6 @@
 # ROADMAP
 
-## Completed
+## Completed (MVP)
 
 - [x] Route protection (middleware) & session management
 
@@ -8,7 +8,7 @@
 
 - [x] Database schema (Portals, Files, Activity Logs)
 
-- [s] Supabase Storage bucket setup (for deliverable files)
+- [x] Supabase Storage bucket setup (for deliverable files)
 
 - [x] Initial Database Migration & RLS Policies
 
@@ -16,31 +16,21 @@
 
 - [x] Consultant dashboard (list portals, status badges)
 
+- [x] Token link generation (save unguessable token to DB)
 
-## MVP (Current Build)
+- [x] Public route `/p/[token]` (no login required)
 
-Phase 1: Foundation & Creation
+- [x] File preview component (PDF, images, fallback)
 
-- [ ] Token link generation (save unguessable token to DB)
+- [x] Approve / Request changes (with mandatory text modal)
 
-Phase 2: The Client Experience
+- [x] Activity logging (track `viewed`, `approved`, `changes_requested`)
 
-- [ ] Public route `/p/[token]` (no login required)
+- [x] Portal detail view (preview file, render activity log)
 
-- [ ] File preview component (PDF, images, fallback)
-
-- [ ] Approve / Request changes (with mandatory text modal)
-
-- [ ] Activity logging (track `viewed`, `approved`, `changes_requested`)
-
-Phase 3: Consultant Experience
-
-- [ ] Portal detail view (preview file, render activity log)
-
-- [ ] "Copy link" functionality
+- [x] "Copy link" functionality
 
 - [ ] Enable OAuth (Google, Microsoft)
-
 
 ## v1.1 (Next)
 
