@@ -1,6 +1,11 @@
 import { VeroriIcon } from '@/components/icon/verori'
 import { LoginForm } from '@/features/auth/components/client/login-form'
+import { Metadata } from 'next'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: "Login"
+}
 
 export default function Login() {
   return (
