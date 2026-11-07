@@ -1,5 +1,4 @@
 import { verifySession } from "@/lib/dal"
-import { LogoutButton } from "@/features/auth"
 import { VeroriIcon } from "@/components/icon/verori"
 import Link from "next/link"
 import { connection } from "next/server"
@@ -10,9 +9,9 @@ export async function DashboardLayoutHeader() {
   const { user } = await verifySession()
 
   return (
-    <header className="sticky top-0 z-30 w-full border-b border-dashed border-zinc-300 dark:border-zinc-700 bg-zinc-50/80 dark:bg-zinc-950/80 backdrop-blur-sm transition-colors">
+    <header className="sticky top-0 z-30 w-full verori-border bg-zinc-50/80 dark:bg-zinc-950/80 backdrop-blur-sm transition-colors">
 
-      <div className="flex h-16 max-w-5xl mx-auto items-center justify-between px-6 sm:px-8">
+      <div className="flex h-16 max-w-6xl mx-auto items-center justify-between px-6 sm:px-8">
 
         <Link href="/dashboard" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <VeroriIcon className="size-6 text-zinc-950 dark:text-zinc-50" />
@@ -30,7 +29,7 @@ export async function DashboardLayoutHeader() {
 
 export function HeaderSkeleton() {
   return (
-    <header className="sticky top-0 z-30 w-full border-b border-dashed border-zinc-300 dark:border-zinc-700 bg-zinc-50/80 dark:bg-zinc-950/80 backdrop-blur-md">
+    <header className="sticky top-0 z-30 w-full verori-border bg-zinc-50/80 dark:bg-zinc-950/80 backdrop-blur-md">
       <div className="flex h-16 max-w-5xl mx-auto items-center justify-between px-6 sm:px-8 animate-pulse">
 
         <div className="flex items-center gap-2">
