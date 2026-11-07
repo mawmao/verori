@@ -36,6 +36,18 @@
     @apply outline-2 outline-dashed outline-red-500;
 }
 
+@utility bg-skeleton {
+    @apply bg-zinc-100 dark:bg-zinc-900;
+}
+
+@utility verori-border {
+    @apply border border-dashed border-zinc-300;
+
+    @variant dark {
+        @apply  border-zinc-700;
+    }
+}
+
 @utility h-divider {
     @apply flex-1 h-px bg-zinc-200;
 
