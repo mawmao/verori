@@ -31,7 +31,7 @@ export const PortalList = Object.assign(
     }
 
     return (
-      <ul className="flex flex-col gap-4 animate-in fade-in duration-300">
+      <ul className="flex flex-col gap-4 flex-1 min-h-0 overflow-y-auto pr-2 pb-4 animate-in fade-in duration-300">
         {visiblePortals.map((portal) => (
           <PortalRow key={portal.id} portal={portal} />
         ))}
@@ -41,7 +41,7 @@ export const PortalList = Object.assign(
   {
     Skeleton: () => {
       return (
-        <ul className="flex flex-col gap-4">
+        <ul className="flex flex-col gap-4 flex-1 min-h-0 overflow-y-auto pr-2 pb-4">
           {[...Array(3)].map((_, i) => (
             <li
               key={i}

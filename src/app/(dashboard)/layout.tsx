@@ -4,14 +4,14 @@ import { Suspense } from "react";
 
 export default function DashboardGroupLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <div className="h-dvh overflow-hidden flex flex-col">
       <Suspense fallback={<HeaderSkeleton />}>
         <DashboardLayoutHeader />
       </Suspense>
-      <main className="flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col min-h-0">
         {children}
       </main>
       <DashboardLayoutFooter />
-    </>
+    </div>
   )
 }
