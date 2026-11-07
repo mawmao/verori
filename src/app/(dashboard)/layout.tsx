@@ -1,15 +1,17 @@
+import { DashboardLayoutFooter } from "./_components/footer";
 import { DashboardLayoutHeader, HeaderSkeleton } from "./_components/header";
 import { Suspense } from "react";
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardGroupLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen flex flex-col bg-zinc-50 dark:bg-zinc-950 transition-colors">
+    <>
       <Suspense fallback={<HeaderSkeleton />}>
         <DashboardLayoutHeader />
       </Suspense>
-      <div className="flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col">
         {children}
-      </div>
-    </div>
+      </main>
+      <DashboardLayoutFooter />
+    </>
   )
 }
