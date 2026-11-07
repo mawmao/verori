@@ -1,5 +1,3 @@
-import Link from "next/link"
-
 export function DashboardSidebar() {
   return (
     <aside className="lg:col-span-1 space-y-6 hidden lg:block">
@@ -33,13 +31,6 @@ export function DashboardSidebar() {
             </li>
           ))}
         </ol>
-      </div>
-
-      <div className="p-5 verori-border rounded-xl flex flex-col items-center text-center">
-        <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-2">Need help getting started?</p>
-        <Link href="#" className="text-sm font-medium text-zinc-950 dark:text-zinc-50 hover:underline underline-offset-4 decoration-zinc-300 dark:decoration-zinc-700">
-          Read the guide
-        </Link>
       </div>
     </aside>
   )
