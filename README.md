@@ -6,7 +6,7 @@
   </p>
 
   <p>
-    <a href="https://verori.vercel.app">Live Demo</a> <em>(Paused until custom domain is purchased)</em> ·
+    <a href="https://verori.app">Live Demo</a> ·
     <a href="https://github.com/mawmao/verori/issues">Report an issue</a>
   </p>
 </div>
@@ -56,7 +56,7 @@ Read the full origin story and product reasoning in [DECISIONS.md](DECISIONS.md)
 
 **MVP Complete & Manually Tested.** The core application is fully built and currently undergoing manual QA testing to ensure stability and edge-case handling.
 
-The live Vercel deployment is temporarily paused until a custom domain is purchased. This is a temporary infrastructure step required to set up a custom SMTP provider (Resend) for reliable transactional email delivery.
+The application is officially deployed and live at [verori.app](https://verori.app).
 
 Email notifications, exports, and billing are planned for future releases. See [DECISIONS.md](DECISIONS.md) for what ships next.
 
