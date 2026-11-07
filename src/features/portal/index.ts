@@ -1,4 +1,4 @@
-export { getPortals } from "./dal"
+export { getPortals, getPortalMetadata, getPortalFile, getPortalEvents } from "./dal"
 
 export type { Status, Portal } from "./portal.types"
 
