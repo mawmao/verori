@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, useMemo, useEffect, ReactNode } from "react"
+import { createContext, useContext, useState, useMemo, useEffect, ReactNode, useCallback } from "react"
 import { createPortal } from "react-dom"
 import { cn } from "@/components/util"
 import { useModalTransition } from "./hooks/use-modal-transition"
@@ -22,11 +22,31 @@ export function useDialog() {
   return context
 }
 
-export function Dialog({ children }: { children: ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false)
-  const value = useMemo(() => {
-    return { isOpen, setIsOpen }
-  }, [isOpen])
+interface DialogProps {
+  children: ReactNode
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  defaultOpen?: boolean
+}
+
+export function Dialog({
+  children,
+  open: openProp,
+  onOpenChange,
+  defaultOpen = false,
+}: DialogProps) {
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen)
+
+  const isControlled = openProp !== undefined
+  const isOpen = isControlled ? openProp : uncontrolledOpen
+
+  const setIsOpen = useCallback((next: boolean) => {
+    if (!isControlled) setUncontrolledOpen(next)
+    onOpenChange?.(next)
+  }, [isControlled, onOpenChange])
+
+  const value = useMemo(() => ({ isOpen, setIsOpen }), [isOpen, setIsOpen])
+
   return <dialogContext.Provider value={value}>{children}</dialogContext.Provider>
 }
 
@@ -86,7 +106,7 @@ export function DialogContent({ children, className }: DialogContentProps) {
         onClick={() => setIsOpen(false)}
         className={cn(
           "fixed inset-0 z-40 bg-black/5 backdrop-blur-xs",
-          "transition-opacity duration-200 ease-out motion-reduce:transition-none",
+          "transition-opacity duration-150 ease-out motion-reduce:transition-none",
           visible ? "opacity-100" : "opacity-0"
         )}
       />
@@ -97,7 +117,7 @@ export function DialogContent({ children, className }: DialogContentProps) {
       >
         <div
           className={cn(
-            "pointer-events-auto w-full max-w-lg overflow-hidden rounded-lg border shadow-xs",
+            "pointer-events-auto w-full overflow-hidden rounded-lg border shadow-xs",
             "border-zinc-300 border-dashed bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950",
             "transition-all duration-200 ease-out motion-reduce:transition-none",
             visible
