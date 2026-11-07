@@ -1,27 +1,8 @@
-<div align="center">
-  <img src="https://raw.githubusercontent.com/mawmao/verori/main/public/web-app-manifest-512x512.png" alt="Verori Logo" width="48" height="48" style="border-radius: 0.5rem;"/>
-  <h1>VERORI</h1>
-  <p>
-  A client-approval portal for solo consultants that tracks every deliverable through timestamped records of when it was sent, viewed, approved, or left unanswered.
- </p>
+# Verori
 
-  <p>
-    <a href="https://verori.vercel.app">Live Demo</a> ·
-    <a href="https://github.com/mawmao/verori/issues">Report an issue</a>
-  </p>
-</div>
+A client-approval portal for solo consultants that tracks every deliverable through timestamped records of when it was sent, viewed, approved, or left unanswered.
 
-<<<<<<< HEAD
-## Status
-
-Early development.  The MVP is currently in active development.
-Email notifications, exports, and billing are planned for future releases. See DECISIONS.md for what ships next.
-
-This is a portfolio project exploring client-approval workflows.
-The hosted version is the maintained product; the repository is shared for reading and learning.
-=======
 [Live demo](https://verori.vercel.app) *(Paused until custom domain is purchased)* · [Report an issue](https://github.com/mawmao/verori/issues)
->>>>>>> 2e19987 (Update README)
 
 ## What it is
 
@@ -37,7 +18,7 @@ It is built specifically for independent marketing, SEO, and content consultants
 
 1. Create - upload a deliverable, add a one-line context note, name the client. Three fields.
 2. Send -  Verori generates a branded, token-based link. Paste it into email or Slack.
-3. Approve - the client opens the link, sees the file, and responds with an approval or a brief explanation of what needs changing. No login required.
+3. Approve - Approve - the client opens the link, sees the file, and responds with an approval or a brief explanation of what needs changing. No login required.
 4. Record - every action is timestamped: created, viewed, approved, changes requested, reminder sent.
 
 ## Why it exists
@@ -67,8 +48,6 @@ Out of scope:
 - Marketplace sellers. Platforms like Fiverr and Upwork already provide the approval mechanic
 
 
-<<<<<<< HEAD
-=======
 ## Status
 
 **MVP Complete & Manually Tested.** The core application is fully built and currently undergoing manual QA testing to ensure stability and edge-case handling.
@@ -78,4 +57,3 @@ The live Vercel deployment is temporarily paused until a custom domain is purcha
 Email notifications, exports, and billing are planned for future releases. See [DECISIONS.md](DECISIONS.md) for what ships next.
 
 This is a portfolio project exploring client-approval workflows.  The hosted version is the maintained product; the repository is shared for reading and learning.
->>>>>>> 2e19987 (Update README)
