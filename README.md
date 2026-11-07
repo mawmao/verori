@@ -11,6 +11,7 @@
   </p>
 </div>
 
+<<<<<<< HEAD
 ## Status
 
 Early development.  The MVP is currently in active development.
@@ -18,6 +19,9 @@ Email notifications, exports, and billing are planned for future releases. See D
 
 This is a portfolio project exploring client-approval workflows.
 The hosted version is the maintained product; the repository is shared for reading and learning.
+=======
+[Live demo](https://verori.vercel.app) *(Paused until custom domain is purchased)* · [Report an issue](https://github.com/mawmao/verori/issues)
+>>>>>>> 2e19987 (Update README)
 
 ## What it is
 
@@ -63,3 +67,15 @@ Out of scope:
 - Marketplace sellers. Platforms like Fiverr and Upwork already provide the approval mechanic
 
 
+<<<<<<< HEAD
+=======
+## Status
+
+**MVP Complete & Manually Tested.** The core application is fully built and currently undergoing manual QA testing to ensure stability and edge-case handling.
+
+The live Vercel deployment is temporarily paused until a custom domain is purchased. This is a temporary infrastructure step required to set up a custom SMTP provider (Resend) for reliable transactional email delivery.
+
+Email notifications, exports, and billing are planned for future releases. See [DECISIONS.md](DECISIONS.md) for what ships next.
+
+This is a portfolio project exploring client-approval workflows.  The hosted version is the maintained product; the repository is shared for reading and learning.
+>>>>>>> 2e19987 (Update README)
