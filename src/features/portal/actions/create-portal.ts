@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 export async function createPortal(formData: FormData) {
@@ -70,5 +71,6 @@ export async function createPortal(formData: FormData) {
     console.error("Failed to log activity:", activityError)
   }
 
-  redirect(`/dashboard/portal/${portal.id}`)
+  revalidatePath('/dashboard')
+  redirect(`/dashboard?portal=${portal.id}`)
 }
