@@ -9,6 +9,12 @@ import { Label } from "@/components/label"
 import { DialogClose } from "@/components/dialog"
 import { UploadIcon } from "@/components/icon/upload"
 import { PlusIcon } from "@/components/icon/plus"
+import { useRef, useState } from "react"
+import { CloseIcon } from "@/components/icon/close"
+import { CheckCircleIcon } from "@/components/icon/check-circle"
+import { cn } from "@/components/util"
+
+const MAX_FILE_SIZE = 1 * 1024 * 1024
 
 export function CreatePortalDialog({ isIcon = false }: { isIcon?: boolean }) {
   return (
@@ -45,6 +51,34 @@ export function CreatePortalDialog({ isIcon = false }: { isIcon?: boolean }) {
 
 
 function CreatePortalForm() {
+  const [file, setFile] = useState<File | null>(null)
+  const [fileError, setFileError] = useState<string | null>(null)
+
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFileError(null)
+
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedFile = e.target.files[0]
+
+      if (selectedFile.size > MAX_FILE_SIZE) {
+        setFileError("File is too large. Maximum size is 1MB.")
+        setFile(null)
+        if (fileInputRef.current) fileInputRef.current.value = ""
+        return
+      }
+
+      setFile(selectedFile)
+    }
+  }
+
+  const handleRemoveFile = () => {
+    setFile(null)
+    setFileError(null)
+    if (fileInputRef.current) fileInputRef.current.value = ""
+  }
+
   return (
     <form action={createPortal} className="p-6 flex flex-col gap-6">
 
@@ -81,28 +115,63 @@ function CreatePortalForm() {
 
         <div className="flex flex-col gap-2">
           <Label htmlFor="file">Upload Deliverable</Label>
-          <div className="relative">
-            <input
-              type="file"
-              id="file"
-              name="file"
-              required
-              accept=".pdf,image/jpeg,image/png,image/webp"
-              className="peer sr-only"
-            />
+
+          <input
+            type="file"
+            id="file"
+            name="file"
+            required={!file}
+            onChange={handleFileChange}
+            ref={fileInputRef}
+            accept=".pdf,image/jpeg,image/png,image/webp"
+            className="peer sr-only"
+          />
+
+          {!file ? (
             <label
               htmlFor="file"
-              className="flex flex-col items-center justify-center w-full h-28 px-4 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-lg cursor-pointer bg-zinc-50 dark:bg-zinc-950/50 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-zinc-500"
+              className={cn(
+                "flex flex-col items-center justify-center w-full h-28 px-4 border border-dashed rounded-lg cursor-pointer transition-colors",
+                fileError
+                  ? "border-red-400 bg-red-50 dark:bg-red-950/20"
+                  : "border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-950/50 hover:bg-zinc-100 dark:hover:bg-zinc-800/50"
+              )}
             >
-              <UploadIcon className="size-6 text-zinc-400 dark:text-zinc-500 mb-2" />
-              <p className="text-xs text-zinc-500 dark:text-zinc-400">
+              <UploadIcon className="size-6 text-zinc-400 mb-2" />
+              <p className="text-xs text-zinc-500">
                 <span className="font-medium text-zinc-950 dark:text-zinc-50">Click to upload</span> or drag and drop
               </p>
               <p className="text-[10px] text-zinc-400 mt-1 uppercase tracking-wider">
-                PDF, JPG, PNG (max 1MB) {/* TODO: 1MB for now */}
+                PDF, JPG, PNG (max 1MB)
               </p>
             </label>
-          </div>
+          ) : (
+            <div className="flex items-center justify-between p-3 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-lg">
+              <div className="flex items-center gap-3 min-w-0">
+                <CheckCircleIcon className="size-5 text-teal-500 shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-xs font-medium text-zinc-950 dark:text-zinc-50 truncate">
+                    {file.name}
+                  </p>
+                  <p className="text-[10px] text-zinc-500">
+                    {(file.size / 1024 / 1024).toFixed(2)} MB
+                  </p>
+                </div>
+              </div>
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={handleRemoveFile}
+                className="w-auto! p-1.5! text-zinc-400 hover:text-red-500"
+              >
+                <CloseIcon className="size-4" />
+              </Button>
+            </div>
+          )}
+
+          {fileError && (
+            <p className="text-xs text-red-500 font-medium mt-1">{fileError}</p>
+          )}
         </div>
       </div>
 
@@ -110,7 +179,7 @@ function CreatePortalForm() {
         <DialogClose as={Button} type="button" variant="outline">
           Cancel
         </DialogClose>
-        <SubmitButton />
+        <SubmitButton disabled={!fileError} />
       </div>
 
     </form>
@@ -118,11 +187,11 @@ function CreatePortalForm() {
 }
 
 
-function SubmitButton() {
+function SubmitButton({ disabled }: { disabled?: boolean }) {
   const { pending } = useFormStatus()
 
   return (
-    <Button type="submit" disabled={pending} isLoading={pending}>
+    <Button type="submit" disabled={pending || disabled} isLoading={pending}>
       {pending ? "Creating..." : "Create & Generate Link"}
     </Button>
   )
