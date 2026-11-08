@@ -3,7 +3,7 @@ import { getPortalByToken, trackPortalView } from "@/features/portal/dal"
 import { FilePreview } from "@/features/portal/components/file-preview"
 import { notFound } from "next/navigation"
 import { ApprovalActions } from "@/features/portal/components/client/approval-actions"
-import { verifySession } from "@/lib/dal"
+import { getOptionalUser, verifySession } from "@/lib/dal"
 
 interface Props {
   params: Promise<{ token: string }>
@@ -17,7 +17,7 @@ export async function PortalContent({ params }: Props) {
     notFound()
   }
 
-  const { user } = await verifySession()
+  const user = await getOptionalUser()
 
   const isConsultant = user?.id === portal.user_id
 
