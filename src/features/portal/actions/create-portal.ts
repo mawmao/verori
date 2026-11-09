@@ -1,7 +1,10 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+
+const MAX_FILE_SIZE = 1 * 1024 * 1024
 
 export async function createPortal(formData: FormData) {
   const supabase = await createClient()
@@ -14,7 +17,13 @@ export async function createPortal(formData: FormData) {
   const contextNote = formData.get('context_note') as string
   const file = formData.get('file') as File
 
-  if (!file || file.size === 0) throw new Error('File is required')
+  if (!file || file.size === 0) {
+    throw new Error('File is required')
+  }
+
+  if (file.size > MAX_FILE_SIZE) {
+    throw new Error('File exceeds the 1MB limit.')
+  }
 
   const fileExt = file.name.split('.').pop()
   const uniqueFilename = `${crypto.randomUUID()}.${fileExt}`
@@ -70,5 +79,6 @@ export async function createPortal(formData: FormData) {
     console.error("Failed to log activity:", activityError)
   }
 
-  redirect(`/dashboard/portal/${portal.id}`)
+  revalidatePath('/dashboard')
+  redirect(`/dashboard?portal=${portal.id}`)
 }

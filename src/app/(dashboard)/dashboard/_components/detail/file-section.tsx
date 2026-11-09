@@ -18,8 +18,14 @@ export const PortalFileSection = Object.assign(
     Skeleton: () => {
       return (
         <div className="lg:col-span-2 space-y-4 animate-pulse">
-          <div className="h-4 w-24 bg-skeleton rounded-md" />
-          <div className="aspect-4/3 w-full bg-skeleton border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl" />
+          <div className="h-5 w-24 bg-skeleton rounded-md" />
+          <div className="flex flex-col verori-border rounded-xl overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-dashed border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/50 shrink-0">
+              <div className="h-4 w-48 bg-skeleton rounded-md" />
+              <div className="size-4 bg-skeleton rounded-sm" />
+            </div>
+            <div className="w-full h-[500px] lg:h-[600px] bg-skeleton" />
+          </div>
         </div>
       )
     }

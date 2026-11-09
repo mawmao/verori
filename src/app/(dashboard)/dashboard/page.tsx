@@ -9,6 +9,7 @@ import { PortalFileSection } from "./_components/detail/file-section"
 import { PortalHeader } from "./_components/detail/header"
 import { RouteModal } from "@/components/route-modal"
 import { Metadata } from "next"
+import { DashboardProvider } from "@/features/portal/components/client/dashboard-context"
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const { portal: portalId } = await searchParams
@@ -40,41 +41,43 @@ interface Props {
 
 export default function DashboardList({ searchParams }: Props) {
   return (
-    <div className="flex-1 flex flex-col min-h-0 w-full max-w-6xl mx-auto px-6 py-10 sm:py-12">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 p-6 sm:p-8 verori-border rounded-xl">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
-            Approvals
-          </h1>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-            Manage your client deliverables and track their status.
-          </p>
+    <DashboardProvider>
+      <div className="flex-1 flex flex-col min-h-0 w-full max-w-6xl mx-auto px-6 py-10 sm:py-12">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 p-6 sm:p-8 verori-border rounded-xl">
+          <div>
+            <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
+              Approvals
+            </h1>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+              Manage your client deliverables and track their status.
+            </p>
+          </div>
+          <div className="w-full sm:w-auto">
+            <CreatePortalDialog isIcon />
+          </div>
         </div>
-        <div className="w-full sm:w-auto">
-          <CreatePortalDialog isIcon />
-        </div>
-      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 flex-1 min-h-0">
-        <div className="lg:col-span-3 flex flex-col gap-6 min-h-0">
-          <Suspense fallback={<PortalStats.Skeleton />}>
-            <PortalStats searchParams={searchParams} />
-          </Suspense>
-          <Suspense fallback={<PortalList.Skeleton />}>
-            <PortalList searchParams={searchParams} />
-          </Suspense>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 flex-1 min-h-0">
+          <div className="lg:col-span-3 flex flex-col gap-6 min-h-0">
+            <Suspense fallback={<PortalStats.Skeleton />}>
+              <PortalStats searchParams={searchParams} />
+            </Suspense>
+            <Suspense fallback={<PortalList.Skeleton />}>
+              <PortalList searchParams={searchParams} />
+            </Suspense>
+          </div>
+          <DashboardSidebar />
         </div>
-        <DashboardSidebar />
-      </div>
 
-      <Suspense fallback={null}>
-        <RouteModal param="portal">
-          <Suspense fallback={<PortalDetailSkeleton />} >
-            <PortalDetailData searchParams={searchParams} />
-          </Suspense>
-        </RouteModal>
-      </Suspense>
-    </div>
+        <Suspense fallback={null}>
+          <RouteModal param="portal" fallback={<PortalDetailSkeleton />} >
+            <Suspense fallback={<PortalDetailSkeleton />} >
+              <PortalDetailData searchParams={searchParams} />
+            </Suspense>
+          </RouteModal>
+        </Suspense>
+      </div>
+    </DashboardProvider>
   )
 }
 

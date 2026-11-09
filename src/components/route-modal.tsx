@@ -2,29 +2,50 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { Dialog, DialogContent } from "@/components/dialog"
-import { ReactNode, useRef } from "react"
+import { ReactNode, useEffect, useState, useRef } from "react"
 import { cn } from "@/components/util"
 import { CloseIcon } from "./icon/close"
 import { Button } from "./button"
+import { useDashboard } from "@/features/portal/components/client/dashboard-context"
 
 interface Props {
   param: string
   children: ReactNode
+  fallback: ReactNode
   className?: string
 }
 
-export function RouteModal({ param, className, children }: Props) {
+export function RouteModal({ param, children, fallback, className }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const { optimisticId, setOptimisticId } = useDashboard()
+  const queryId = searchParams.get(param)
+  const [isClosing, setIsClosing] = useState(false)
 
-  const open = searchParams.has(param)
+  useEffect(() => setIsClosing(false), [queryId, optimisticId])
 
-  const lastChildren = useRef(children)
-  if (open) lastChildren.current = children
+  const open = (queryId !== null || optimisticId !== null) && !isClosing
+
+  const isOptimistic = optimisticId !== null && queryId === null
+
+  const lastContent = useRef<ReactNode>(children)
+  if (open) {
+    lastContent.current = children
+  }
+
+  useEffect(() => {
+    if (queryId && optimisticId) {
+      setOptimisticId(null)
+    }
+  }, [queryId, optimisticId, setOptimisticId])
 
   const handleOpenChange = (next: boolean) => {
     if (next) return
+
+    setIsClosing(true)
+    setOptimisticId(null)
+
     const params = new URLSearchParams(searchParams.toString())
     params.delete(param)
     const qs = params.toString()
@@ -33,7 +54,7 @@ export function RouteModal({ param, className, children }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className={cn("relative max-w-5xl w-full max-h-[90vh] overflow-hidden p-0 bg-zinc-50 dark:bg-zinc-950", className)} >
+      <DialogContent className={cn("relative flex flex-col max-w-5xl w-full h-[85vh] max-h-[90vh] overflow-hidden p-0 bg-zinc-50 dark:bg-zinc-950", className)} >
         <div className={cn(
           "absolute top-3 right-3 z-50 flex items-center gap-2 rounded-lg p-1",
           "bg-zinc-50/80 backdrop-blur-sm dark:bg-zinc-950/80"
@@ -49,8 +70,8 @@ export function RouteModal({ param, className, children }: Props) {
           </Button>
         </div>
 
-        <div className="w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8">
-          {lastChildren.current}
+        <div className="w-full flex-1 overflow-y-auto p-6 sm:p-8">
+          {open ? (isOptimistic ? fallback : children) : lastContent.current}
         </div>
       </DialogContent>
     </Dialog>

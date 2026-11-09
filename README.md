@@ -6,7 +6,7 @@
   </p>
 
   <p>
-    <a href="https://verori.vercel.app">Live Demo</a> <em>(Paused until custom domain is purchased)</em> ·
+    <a href="https://verori.app">Live Demo</a> ·
     <a href="https://github.com/mawmao/verori/issues">Report an issue</a>
   </p>
 </div>
@@ -58,7 +58,8 @@ Read the full origin story and product reasoning in [DECISIONS.md](DECISIONS.md)
 Early development.  The MVP is currently in active development.
 Email notifications, exports, and billing are planned for future releases. See DECISIONS.md for what ships next.
 
-This is a portfolio project exploring client-approval workflows.
-The hosted version is the maintained product; the repository is shared for reading and learning.
+The application is officially deployed and live at [verori.app](https://verori.app).
+
+Email notifications, exports, and billing are planned for future releases. See [DECISIONS.md](DECISIONS.md) for what ships next.
 
 This is a portfolio project exploring client-approval workflows. The hosted version is the maintained product; the repository is shared for reading and learning.

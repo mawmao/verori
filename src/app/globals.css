@@ -46,7 +46,7 @@
 }
 
 @utility bg-skeleton {
-    @apply bg-zinc-100 dark:bg-zinc-900;
+    @apply bg-zinc-200/75 dark:bg-zinc-800;
 }
 
 @utility verori-border {
