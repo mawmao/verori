@@ -123,7 +123,6 @@ function CreatePortalForm() {
             required={!file}
             onChange={handleFileChange}
             ref={fileInputRef}
-            accept=".pdf,image/jpeg,image/png,image/webp"
             className="peer sr-only"
           />
 

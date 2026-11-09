@@ -8,5 +8,10 @@ export interface Portal {
   context_note: string
   title: string
   status: Status
-  created_at: string
+  created_at: string,
+  file?: {
+    metadata?: {
+      orientation?: 'portrait' | 'landscape'
+    }
+  }[]
 }

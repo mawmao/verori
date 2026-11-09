@@ -38,8 +38,8 @@ export function CopyLinkButton({ token }: { token: string }) {
         onClick={handleCopy}
         aria-label="Copy link"
         className={`absolute right-1 top-1/2 -translate-y-1/2 w-auto! px-3! py-1! text-xs font-medium transition-all ${copied
-            ? "text-teal-600 dark:text-teal-400"
-            : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
+          ? "text-teal-600 dark:text-teal-400"
+          : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
           }`}
       >
         {copied ? "Copied!" : "Copy"}

@@ -27,14 +27,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default function ClientPortal({ params }: Props) {
   return (
-    <main className="flex-1 flex flex-col min-h-0 w-full max-w-3xl mx-auto px-6 pt-12 sm:pt-20">
-      <div className="flex items-center justify-center gap-2 mb-12 shrink-0">
-        <VeroriIcon className="size-6 text-zinc-950 dark:text-zinc-50" />
-        <span className="text-lg font-semibold tracking-tighter uppercase text-zinc-950 dark:text-zinc-50">
-          Verori
-        </span>
-      </div>
-      <div className="flex-1 min-h-0 overflow-y-auto pb-12 pr-1">
+    <main className="flex-1 flex flex-col items-center justify-center w-full min-h-0 overflow-y-auto p-6 sm:p-12">
+      <div className="w-full max-w-xl flex flex-col gap-10 my-auto">
+        <div className="flex items-center justify-center gap-2 shrink-0">
+          <VeroriIcon className="size-6 text-zinc-950 dark:text-zinc-50" />
+          <span className="text-lg font-semibold tracking-tighter uppercase text-zinc-950 dark:text-zinc-50">
+            Verori
+          </span>
+        </div>
         <Suspense fallback={<PortalSkeleton />}>
           <PortalContent params={params} />
         </Suspense>

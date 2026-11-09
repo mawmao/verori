@@ -30,7 +30,7 @@ export const getPortalMetadata = cache(async (shareToken: string) => {
 
   const { data } = await supabase
     .from("portal")
-    .select("id, title, client_name, status, share_token, created_at, context_note")
+    .select("id, title, client_name, status, share_token, created_at, context_note, file ( metadata )")
     .eq("share_token", shareToken)
     .eq("user_id", user.id)
     .single()
@@ -44,7 +44,7 @@ export const getPortalFile = cache(async (id: string) => {
 
   const { data: file } = await supabase
     .from("file")
-    .select("id, name, mime_type, storage_key")
+    .select("id, name, mime_type, storage_key, metadata, size")
     .eq("portal_id", id)
     .single()
 
@@ -84,7 +84,7 @@ export const getPortalByToken = cache(async (token: string)  => {
       context_note,
       status,
       created_at,
-      file ( id, name, mime_type, storage_key )
+      file ( id, name, mime_type, storage_key, metadata, size )
     `)
     .eq("share_token", token)
     .single()
