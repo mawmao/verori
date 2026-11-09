@@ -14,6 +14,7 @@ export function PortalRow({ portal }: { portal: Portal }) {
     <li>
       <Link
         href={`/dashboard?portal=${portal.share_token}`}
+        prefetch={true}
         scroll={false}
         onClick={() => setOptimisticId(portal.share_token)}
         className="block"
