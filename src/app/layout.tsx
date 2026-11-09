@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Verori - Client sign-off for solo consultants',
+    template: '%s | Verori',
     default: 'Verori | Client sign-off for solo consultants',
   },
   description: 'Verori is the minimal client-approval portal for solo consultants. Generate a secure link, track when it is viewed, and get timestamped sign-offs without forcing your clients to create an account.',
