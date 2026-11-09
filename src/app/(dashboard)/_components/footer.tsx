@@ -13,6 +13,9 @@ export function DashboardLayoutFooter() {
           <Link prefetch={false} href="/privacy" className="hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors">
             Privacy
           </Link>
+          <Link prefetch={false} href="/cookies" className="hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors">
+            Cookies
+          </Link>
         </div>
       </div>
     </footer>
