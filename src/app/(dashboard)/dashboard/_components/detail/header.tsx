@@ -45,15 +45,16 @@ export const PortalHeader = Object.assign(
   {
     Skeleton: () => {
       return (
-        <div className="mb-8 pr-12 animate-pulse">
+        <div className="mb-8 animate-pulse">
           <div className="flex items-center gap-3 mb-4">
-            <div className="h-8 w-64 bg-skeleton rounded-md" />
+            <div className="h-9 w-64 bg-skeleton rounded-md" />
             <div className="h-6 w-20 bg-skeleton rounded-full" />
           </div>
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 p-5 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl bg-white dark:bg-zinc-900/50">
-            <div className="flex gap-4">
-              <div className="h-5 w-32 bg-skeleton rounded-md" />
-              <div className="h-5 w-32 bg-skeleton rounded-md" />
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 p-5 verori-border rounded-xl">
+            <div className="flex flex-wrap items-center gap-4">
+              <div className="h-7 w-32 bg-skeleton rounded-md" />
+              <div className="hidden sm:block w-px h-5 bg-zinc-300 dark:bg-zinc-700" />
+              <div className="h-7 w-32 bg-skeleton rounded-md" />
             </div>
             <div className="h-[42px] w-[320px] bg-skeleton rounded-md shrink-0" />
           </div>
