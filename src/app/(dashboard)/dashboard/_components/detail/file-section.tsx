@@ -2,8 +2,8 @@ import { FilePreview } from "@/features/portal/components/file-preview"
 import { getPortalFile } from "@/features/portal"
 
 export const PortalFileSection = Object.assign(
-  async function PortalFileSection({ id }: { id: string }) {
-    const fileData = await getPortalFile(id)
+  async function PortalFileSection({ portalId }: { portalId: string }) {
+    const fileData = await getPortalFile(portalId)
 
     return (
       <div className="lg:col-span-2 space-y-4">

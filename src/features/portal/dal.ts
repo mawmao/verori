@@ -11,7 +11,7 @@ export const getPortals = cache(async () => {
 
   const { data, error } = await supabase
     .from("portal")
-    .select("id, client_name, title, status, created_at")
+    .select("id, client_name, share_token, context_note, title, status, created_at")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
 
@@ -23,7 +23,7 @@ export const getPortals = cache(async () => {
   return data as Portal[]
 })
 
-export const getPortalMetadata = cache(async (id: string) => {
+export const getPortalMetadata = cache(async (shareToken: string) => {
   await connection()
   const { user } = await verifySession()
   const supabase = await createClient()
@@ -31,7 +31,7 @@ export const getPortalMetadata = cache(async (id: string) => {
   const { data } = await supabase
     .from("portal")
     .select("id, title, client_name, status, share_token, created_at, context_note")
-    .eq("id", id)
+    .eq("share_token", shareToken)
     .eq("user_id", user.id)
     .single()
 

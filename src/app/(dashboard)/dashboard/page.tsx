@@ -82,15 +82,18 @@ export default function DashboardList({ searchParams }: Props) {
 }
 
 async function PortalDetailData({ searchParams }: { searchParams: Promise<SearchParams> }) {
-  const { portal: portalId } = await searchParams
-  if (!portalId) return null
+  const { portal: shareToken } = await searchParams
+  if (!shareToken) return null
+
+  const portal = await getPortalMetadata(shareToken)
+  if (!portal) return null
 
   return (
     <>
-      <PortalHeader id={portalId} />
+      <PortalHeader portal={portal} />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-        <PortalFileSection id={portalId} />
-        <PortalActivitySection id={portalId} />
+        <PortalFileSection portalId={portal.id} />
+        <PortalActivitySection portal={portal} />
       </div>
     </>
   )

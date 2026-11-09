@@ -1,10 +1,9 @@
-import { getPortalEvents, getPortalMetadata } from "@/features/portal"
+import { getPortalEvents, getPortalMetadata, Portal } from "@/features/portal"
 import { ActivityLog } from "@/features/portal/components/activity-log"
 
 export const PortalActivitySection = Object.assign(
-  async function PortalActivitySection({ id }: { id: string }) {
-    const portal = await getPortalMetadata(id)
-    const events = await getPortalEvents(id)
+  async function PortalActivitySection({ portal }: { portal: Portal }) {
+    const events = await getPortalEvents(portal.id)
 
     return (
       <div className="space-y-6">
@@ -14,7 +13,7 @@ export const PortalActivitySection = Object.assign(
           </h2>
           <div className="p-4 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl bg-zinc-50 dark:bg-zinc-950/50">
             <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed whitespace-pre-wrap">
-              {portal?.context_note || "No context note provided."}
+              {portal.context_note || "No context note provided."}
             </p>
           </div>
         </div>

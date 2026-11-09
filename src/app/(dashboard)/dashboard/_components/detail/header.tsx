@@ -1,13 +1,10 @@
-import { notFound } from "next/navigation"
-import { getPortalMetadata, StatusBadge } from "@/features/portal"
+import { Portal, StatusBadge } from "@/features/portal"
 import { CopyLinkButton } from "./copy-link-button"
 import { UserIcon } from "@/components/icon/user"
 import { CalendarIcon } from "@/components/icon/calendar"
 
 export const PortalHeader = Object.assign(
-  async function PortalHeader({ id }: { id: string }) {
-    const portal = await getPortalMetadata(id)
-    if (!portal) notFound()
+  async function PortalHeader({ portal }: { portal: Portal }) {
 
     return (
       <div className="mb-8">
