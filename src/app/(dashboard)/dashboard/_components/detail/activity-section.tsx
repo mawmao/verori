@@ -32,12 +32,12 @@ export const PortalActivitySection = Object.assign(
     Skeleton: () => {
       return (
         <div className="space-y-6 animate-pulse">
-          <div className="space-y-3">
-            <div className="h-4 w-28 bg-skeleton rounded-md" />
+          <div>
+            <div className="h-5 w-28 bg-skeleton rounded-md mb-3" />
             <div className="h-24 w-full bg-skeleton border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl" />
           </div>
-          <div className="space-y-3">
-            <div className="h-4 w-28 bg-skeleton rounded-md" />
+          <div>
+            <div className="h-5 w-28 bg-skeleton rounded-md mb-3" />
             <div className="h-48 w-full bg-skeleton border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl" />
           </div>
         </div>

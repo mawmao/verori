@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { getPortals, Status } from "@/features/portal"
 import { DashboardEmpty } from "../../../app/(dashboard)/dashboard/_components/empty"
-import { PortalRow } from "./portal-row"
+import { PortalRow } from "./client/portal-row"
 
 interface Props {
   searchParams: Promise<{ status?: Status }>
