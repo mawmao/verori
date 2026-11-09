@@ -1,6 +1,6 @@
 export function DashboardSidebar() {
   return (
-    <aside className="lg:col-span-1 space-y-6 hidden lg:block">
+    <aside className="lg:col-span-1 space-y-4 hidden lg:block">
       <div className="p-5 verori-border rounded-xl bg-zinc-50 dark:bg-zinc-900/50">
         <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-3 flex items-center gap-2">
           <span className="text-teal-600 dark:text-teal-400">✦</span> Pro Tip

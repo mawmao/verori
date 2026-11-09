@@ -19,7 +19,7 @@ export function PortalRow({ portal }: { portal: Portal }) {
         onClick={() => setOptimisticId(portal.share_token)}
         className="block"
       >
-        <div className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 transition-all gap-3 sm:gap-4 verori-border rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-900/50">
+        <div className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 transition-all gap-2 sm:gap-4 verori-border rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-900/50">
           <div className="flex flex-col gap-1 min-w-0">
             <span className="font-medium text-sm text-zinc-950 dark:text-zinc-50 group-hover:text-zinc-600 dark:group-hover:text-zinc-400 transition-colors truncate">
               {portal.title}

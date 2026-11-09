@@ -30,7 +30,7 @@ export const PortalStats = Object.assign(
     ]
 
     return (
-      <nav aria-label="Filter by status" className="flex gap-1 overflow-x-auto mb-6 -mx-6 px-6 sm:mx-0 sm:px-0 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <nav aria-label="Filter by status" className="flex gap-2 overflow-x-auto mb-6 px-6 sm:mx-0 sm:px-0 scrollbar-none [&::-webkit-scrollbar]:hidden">
         {tabs.map((tab) => (
           <Link
             key={tab.label}
