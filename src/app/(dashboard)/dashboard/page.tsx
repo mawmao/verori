@@ -42,8 +42,8 @@ interface Props {
 export default function DashboardList({ searchParams }: Props) {
   return (
     <DashboardProvider>
-      <div className="flex-1 flex flex-col min-h-0 w-full max-w-6xl mx-auto px-6 py-10 sm:py-12">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 p-6 sm:p-8 verori-border rounded-xl">
+      <div className="flex-1 flex flex-col min-h-0 w-full max-w-6xl mx-auto p-4 sm:py-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 p-6 verori-border rounded-xl shrink-0">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
               Approvals
@@ -57,8 +57,8 @@ export default function DashboardList({ searchParams }: Props) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 flex-1 min-h-0">
-          <div className="lg:col-span-3 flex flex-col gap-6 min-h-0">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 flex-1 min-h-0">
+          <div className="lg:col-span-3 flex flex-col min-h-0 shrink-0">
             <Suspense fallback={<PortalStats.Skeleton />}>
               <PortalStats searchParams={searchParams} />
             </Suspense>
@@ -66,7 +66,9 @@ export default function DashboardList({ searchParams }: Props) {
               <PortalList searchParams={searchParams} />
             </Suspense>
           </div>
-          <DashboardSidebar />
+          <div className="lg:col-span-1 min-h-0 overflow-y-auto hidden lg:block">
+            <DashboardSidebar />
+          </div>
         </div>
 
         <Suspense fallback={null}>
