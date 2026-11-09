@@ -34,12 +34,19 @@ export default function Login() {
           >
             Terms of Service
           </Link>
-          {" and "}
+          {", "}
           <Link
             href="/privacy"
             className="underline decoration-zinc-300 dark:decoration-zinc-700 underline-offset-2 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors"
           >
             Privacy Policy
+          </Link>
+          {", and "}
+          <Link
+            href="/cookies"
+            className="underline decoration-zinc-300 dark:decoration-zinc-700 underline-offset-2 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors"
+          >
+            Cookie Policy
           </Link>.
         </p>
 
