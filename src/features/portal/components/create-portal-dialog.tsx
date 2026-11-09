@@ -179,7 +179,7 @@ function CreatePortalForm() {
         <DialogClose as={Button} type="button" variant="outline">
           Cancel
         </DialogClose>
-        <SubmitButton disabled={!fileError} />
+        <SubmitButton disabled={!!fileError} />
       </div>
 
     </form>
