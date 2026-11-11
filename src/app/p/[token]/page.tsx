@@ -1,8 +1,8 @@
 import { getPortalByToken } from "@/features/portal/dal"
-import { VeroriIcon } from "@/components/icon/verori"
 import { Metadata } from "next"
 import { Suspense } from "react"
 import { PortalContent, PortalSkeleton } from "@/features/portal/components/client/portal-content"
+import { BrandLogo } from "@/components/brand-logo"
 
 interface Props {
   params: Promise<{ token: string }>
@@ -29,12 +29,7 @@ export default function ClientPortal({ params }: Props) {
   return (
     <main className="flex-1 flex flex-col items-center justify-center w-full min-h-0 overflow-y-auto p-6 sm:p-12">
       <div className="w-full max-w-xl flex flex-col gap-10 my-auto">
-        <div className="flex items-center justify-center gap-2 shrink-0">
-          <VeroriIcon className="size-6 text-zinc-950 dark:text-zinc-50" />
-          <span className="text-lg font-semibold tracking-tighter uppercase text-zinc-950 dark:text-zinc-50">
-            Verori
-          </span>
-        </div>
+        <BrandLogo className="justify-center" />
         <Suspense fallback={<PortalSkeleton />}>
           <PortalContent params={params} />
         </Suspense>

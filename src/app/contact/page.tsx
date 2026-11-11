@@ -2,11 +2,11 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { VeroriIcon } from "@/components/icon/verori"
 import { ArrowLeftIcon } from "@/components/icon/arrow-left"
 import { Button } from "@/components/button"
 import { Input } from "@/components/input"
 import { Label } from "@/components/label"
+import { BrandLogo } from "@/components/brand-logo"
 
 export default function Contact() {
   const [name, setName] = useState("")
@@ -36,12 +36,7 @@ export default function Contact() {
           <ArrowLeftIcon /> Back
         </Link>
         <div className="flex flex-col gap-6">
-          <Link href="/login" className="flex items-center gap-2 w-fit hover:opacity-80 transition-opacity">
-            <VeroriIcon className="size-6 text-zinc-950 dark:text-zinc-50" />
-            <span className="text-xl font-semibold tracking-tighter uppercase text-zinc-950 dark:text-zinc-50">
-              Verori
-            </span>
-          </Link>
+          <BrandLogo href="/" />
 
           <div className="space-y-2">
             <h1 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
