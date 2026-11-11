@@ -1,15 +1,15 @@
 import { Suspense } from "react"
 import { CreatePortalDialog } from "@/features/portal/components/create-portal-dialog"
-import { getPortalMetadata, Status } from "@/features/portal"
+import { getPortalEvents, getPortalFile, getPortalMetadata, Status } from "@/features/portal"
 import { PortalStats } from "../../../features/portal/components/portal-stats"
 import { PortalList } from "../../../features/portal/components/portal-list"
 import { DashboardSidebar } from "./_components/sidebar"
-import { PortalActivitySection } from "./_components/detail/activity-section"
-import { PortalFileSection } from "./_components/detail/file-section"
 import { PortalHeader } from "./_components/detail/header"
 import { RouteModal } from "@/components/route-modal"
 import { Metadata } from "next"
 import { DashboardProvider } from "@/features/portal/components/client/dashboard-context"
+import { ActivityLog } from "@/features/portal/components/activity-log"
+import { FileEntry } from "@/components/file-entry"
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const { portal: portalId } = await searchParams
@@ -42,8 +42,8 @@ interface Props {
 export default function DashboardList({ searchParams }: Props) {
   return (
     <DashboardProvider>
-      <div className="flex-1 flex flex-col min-h-0 w-full max-w-6xl mx-auto px-6 py-10 sm:py-12">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 p-6 sm:p-8 verori-border rounded-xl">
+      <div className="flex-1 flex flex-col min-h-0 w-full max-w-6xl mx-auto p-4 sm:py-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 p-6 verori-border rounded-xl shrink-0">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
               Approvals
@@ -57,8 +57,8 @@ export default function DashboardList({ searchParams }: Props) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 flex-1 min-h-0">
-          <div className="lg:col-span-3 flex flex-col gap-6 min-h-0">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 flex-1 min-h-0">
+          <div className="lg:col-span-3 flex flex-col min-h-0 shrink-0">
             <Suspense fallback={<PortalStats.Skeleton />}>
               <PortalStats searchParams={searchParams} />
             </Suspense>
@@ -66,7 +66,9 @@ export default function DashboardList({ searchParams }: Props) {
               <PortalList searchParams={searchParams} />
             </Suspense>
           </div>
-          <DashboardSidebar />
+          <div className="lg:col-span-1 min-h-0 overflow-y-auto hidden lg:block">
+            <DashboardSidebar />
+          </div>
         </div>
 
         <Suspense fallback={null}>
@@ -82,27 +84,80 @@ export default function DashboardList({ searchParams }: Props) {
 }
 
 async function PortalDetailData({ searchParams }: { searchParams: Promise<SearchParams> }) {
-  const { portal: portalId } = await searchParams
-  if (!portalId) return null
+  const { portal: shareToken } = await searchParams
+
+  if (!shareToken) return <PortalDetailSkeleton />
+
+  const portal = await getPortalMetadata(shareToken)
+  if (!portal) return null
+
+  const events = await getPortalEvents(portal.id)
+  const fileData = await getPortalFile(portal.id)
 
   return (
-    <>
-      <PortalHeader id={portalId} />
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-        <PortalFileSection id={portalId} />
-        <PortalActivitySection id={portalId} />
+    <div className="space-y-8">
+      <PortalHeader portal={portal} />
+
+      <div className="flex flex-col gap-8">
+
+        <div className="space-y-3">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-zinc-500">
+            Context Note
+          </h2>
+          <div className="p-5 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl bg-zinc-50 dark:bg-zinc-950/50">
+            <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed whitespace-pre-wrap italic">
+              "{portal.context_note || "No context note provided."}"
+            </p>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-zinc-500">
+            Deliverable
+          </h2>
+          <FileEntry file={fileData} signedUrl={fileData?.signedUrl} />
+        </div>
+
+        <div className="space-y-3">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-zinc-500">
+            Activity Ledger
+          </h2>
+          <ActivityLog events={events} />
+        </div>
+
       </div>
-    </>
+    </div>
   )
 }
 
 function PortalDetailSkeleton() {
   return (
-    <div className="pt-12 space-y-6">
+    <div className="pt-12 space-y-8">
       <PortalHeader.Skeleton />
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-        <PortalFileSection.Skeleton />
-        <PortalActivitySection.Skeleton />
+
+      <div className="flex flex-col gap-8">
+
+        <div className="space-y-3 animate-pulse">
+          <div className="h-5 w-28 bg-skeleton rounded-md" />
+          <div className="h-[86px] w-full bg-skeleton border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl" />
+        </div>
+
+        <div className="space-y-3 animate-pulse">
+          <div className="h-5 w-24 bg-skeleton rounded-md" />
+          <div className="flex items-center gap-4 p-4 verori-border rounded-xl">
+            <div className="size-10 shrink-0 bg-skeleton rounded-lg" />
+            <div className="space-y-2 flex-1">
+              <div className="h-4 w-48 bg-skeleton rounded-md" />
+              <div className="h-3 w-16 bg-skeleton rounded-md" />
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-3 animate-pulse">
+          <div className="h-5 w-32 bg-skeleton rounded-md" />
+          <div className="h-[120px] w-full bg-skeleton border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl" />
+        </div>
+
       </div>
     </div>
   )

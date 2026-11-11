@@ -69,7 +69,8 @@ export function LoginForm() {
         </p>
       )}
 
-      {step === "email" && (
+      {/* temporarily hiding it instead of just disabling the buttons*/}
+      {/* {step === "email" && (
         <>
           <div className="flex items-center w-full my-1">
             <div className="h-divider" />
@@ -105,7 +106,7 @@ export function LoginForm() {
             </Button>
           </div>
         </>
-      )}
+      )} */}
     </div>
   )
 }

@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/dashboard/', '/p/'],
     },
-    sitemap: 'https://verori.vercel.app/sitemap.xml',
+    sitemap: 'https://verori.app/sitemap.xml',
   }
 }

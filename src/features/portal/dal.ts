@@ -11,7 +11,7 @@ export const getPortals = cache(async () => {
 
   const { data, error } = await supabase
     .from("portal")
-    .select("id, client_name, title, status, created_at")
+    .select("id, client_name, share_token, context_note, title, status, created_at")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
 
@@ -23,15 +23,15 @@ export const getPortals = cache(async () => {
   return data as Portal[]
 })
 
-export const getPortalMetadata = cache(async (id: string) => {
+export const getPortalMetadata = cache(async (shareToken: string) => {
   await connection()
   const { user } = await verifySession()
   const supabase = await createClient()
 
   const { data } = await supabase
     .from("portal")
-    .select("id, title, client_name, status, share_token, created_at, context_note")
-    .eq("id", id)
+    .select("id, title, client_name, status, share_token, created_at, context_note, file ( metadata )")
+    .eq("share_token", shareToken)
     .eq("user_id", user.id)
     .single()
 
@@ -44,7 +44,7 @@ export const getPortalFile = cache(async (id: string) => {
 
   const { data: file } = await supabase
     .from("file")
-    .select("id, name, mime_type, storage_key")
+    .select("id, name, mime_type, storage_key, metadata, size")
     .eq("portal_id", id)
     .single()
 
@@ -84,7 +84,7 @@ export const getPortalByToken = cache(async (token: string)  => {
       context_note,
       status,
       created_at,
-      file ( id, name, mime_type, storage_key )
+      file ( id, name, mime_type, storage_key, metadata, size )
     `)
     .eq("share_token", token)
     .single()

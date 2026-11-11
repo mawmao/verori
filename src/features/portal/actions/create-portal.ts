@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import sizeOf from 'image-size'
 
 const MAX_FILE_SIZE = 1 * 1024 * 1024
 
@@ -54,6 +55,21 @@ export async function createPortal(formData: FormData) {
     throw new Error('Failed to create portal')
   }
 
+  let metadata = {}
+  if (file.type.startsWith('image/')) {
+    try {
+      const buffer = Buffer.from(await file.arrayBuffer())
+      const dimensions = sizeOf(buffer)
+      metadata = {
+        width: dimensions.width,
+        height: dimensions.height,
+        orientation: dimensions.width && dimensions.height && dimensions.width > dimensions.height ? 'landscape' : 'portrait'
+      }
+    } catch (e) {
+      console.error("Failed to parse image metadata", e)
+    }
+  }
+
   const { error: fileError } = await supabase
     .from('file')
     .insert({
@@ -62,6 +78,7 @@ export async function createPortal(formData: FormData) {
       mime_type: file.type,
       size: file.size,
       storage_key: storageKey,
+      metadata
     })
 
   if (fileError) {
@@ -80,5 +97,5 @@ export async function createPortal(formData: FormData) {
   }
 
   revalidatePath('/dashboard')
-  redirect(`/dashboard?portal=${portal.id}`)
+  redirect(`/dashboard?portal=${portal.share_token}`)
 }

@@ -1,9 +1,10 @@
 import { after } from "next/server"
 import { getPortalByToken, trackPortalView } from "@/features/portal/dal"
-import { FilePreview } from "@/features/portal/components/file-preview"
 import { notFound } from "next/navigation"
-import { ApprovalActions } from "@/features/portal/components/client/approval-actions"
-import { getOptionalUser, verifySession } from "@/lib/dal"
+import { getOptionalUser } from "@/lib/dal"
+import { CheckCircleIcon } from "@/components/icon/check-circle"
+import { EditIcon } from "@/components/icon/edit"
+import { ReviewDeliverable } from "./review-modal"
 
 interface Props {
   params: Promise<{ token: string }>
@@ -18,7 +19,6 @@ export async function PortalContent({ params }: Props) {
   }
 
   const user = await getOptionalUser()
-
   const isConsultant = user?.id === portal.user_id
 
   if (portal.status === "sent" && !isConsultant) {
@@ -30,9 +30,9 @@ export async function PortalContent({ params }: Props) {
   const lastEvent = portal.activity_event[portal.activity_event.length - 1]
 
   return (
-    <div className="h-full flex flex-col gap-6">
+    <div className="flex flex-col gap-8 w-full">
 
-      <div className="text-center space-y-3 shrink-0">
+      <div className="text-center space-y-3">
         <h1 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
           {portal.title}
         </h1>
@@ -42,43 +42,56 @@ export async function PortalContent({ params }: Props) {
       </div>
 
       {isConsultant && (
-        <div className="p-3 text-center text-xs font-medium text-amber-600 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-900/50 rounded-lg shrink-0">
+        <div className="p-3 text-center text-xs font-medium text-amber-600 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-900/50 rounded-lg">
           You are viewing this as the consultant. Activity will not be tracked.
         </div>
       )}
 
       {portal.context_note && (
-        <div className="p-5 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl shrink-0">
+        <div className="p-5 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl">
           <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed text-center italic">
             "{portal.context_note}"
           </p>
         </div>
       )}
 
-      <div className="flex-1 min-h-0">
-        <FilePreview file={portal.file?.[0]} signedUrl={portal.signedUrl} />
-      </div>
+      <div>
+        <h2 className="text-sm font-semibold uppercase tracking-widest text-zinc-500 mb-3 text-center">
+          Deliverable
+        </h2>
 
-      <div className="pt-6 border-t border-dashed border-zinc-300 dark:border-zinc-700 shrink-0">
         {isApproved ? (
-          <div className="text-center p-6 bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-900/50 rounded-xl">
-            <h3 className="text-lg font-semibold text-teal-800 dark:text-teal-300 mb-1">Approved</h3>
-            <p className="text-sm text-teal-600 dark:text-teal-400">
-              You approved this deliverable on {new Date(lastEvent.created_at).toLocaleDateString()}.
-            </p>
-          </div>
-        ) : isChangesRequested ? (
-          <div className="text-center p-6 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-900/50 rounded-xl">
-            <h3 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-1">Changes Requested</h3>
-            <p className="text-sm text-amber-600 dark:text-amber-400 mb-4">
-              You requested changes on {new Date(lastEvent.created_at).toLocaleDateString()}.
-            </p>
-            <div className="text-sm text-amber-800 dark:text-amber-200 bg-amber-100/50 dark:bg-amber-950/50 p-4 rounded-lg inline-block text-left">
-              "{lastEvent.metadata?.reason}"
+          <div className="flex items-center justify-center gap-4 p-4 border border-dashed border-teal-300 dark:border-teal-800 rounded-xl bg-teal-50/50 dark:bg-teal-900/10">
+            <CheckCircleIcon className="size-6 text-teal-600 dark:text-teal-400" />
+            <div className="text-left">
+              <p className="text-sm font-medium text-teal-800 dark:text-teal-300">Approved</p>
+              <p className="text-xs text-teal-600 dark:text-teal-400">
+                {new Date(lastEvent.created_at).toLocaleDateString()}
+              </p>
             </div>
           </div>
+        ) : isChangesRequested ? (
+          <div className="flex flex-col gap-3 p-4 border border-dashed border-amber-300 dark:border-amber-800 rounded-xl bg-amber-50/50 dark:bg-amber-900/10">
+            <div className="flex items-center justify-center gap-4">
+              <EditIcon className="size-6 text-amber-600 dark:text-amber-400" />
+              <div className="text-left">
+                <p className="text-sm font-medium text-amber-800 dark:text-amber-300">Changes Requested</p>
+                <p className="text-xs text-amber-600 dark:text-amber-400">
+                  {new Date(lastEvent.created_at).toLocaleDateString()}
+                </p>
+              </div>
+            </div>
+            <p className="text-sm text-amber-800 dark:text-amber-200 bg-amber-100/50 dark:bg-amber-950/50 p-3 rounded-lg text-left">
+              "{lastEvent.metadata?.reason}"
+            </p>
+          </div>
         ) : (
-          <ApprovalActions token={token} portalId={portal.id} />
+          <ReviewDeliverable
+            file={portal.file?.[0]}
+            signedUrl={portal.signedUrl!}
+            token={token}
+            portalId={portal.id}
+          />
         )}
       </div>
     </div>
@@ -87,29 +100,25 @@ export async function PortalContent({ params }: Props) {
 
 export function PortalSkeleton() {
   return (
-    <div className="h-full flex flex-col gap-6 animate-pulse">
-      <div className="text-center space-y-3 flex flex-col items-center shrink-0">
+    <div className="flex flex-col gap-8 w-full animate-pulse">
+      <div className="text-center space-y-3 flex flex-col items-center">
         <div className="h-9 w-3/4 sm:w-1/2 bg-skeleton rounded-md" />
         <div className="h-4 w-48 bg-skeleton rounded-md" />
       </div>
 
-      <div className="p-5 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl bg-zinc-50 dark:bg-zinc-900/50 flex flex-col items-center gap-2 shrink-0">
+      <div className="p-5 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl bg-zinc-50 dark:bg-zinc-900/50 flex flex-col items-center gap-2">
         <div className="h-3 w-full bg-skeleton rounded-md" />
         <div className="h-3 w-4/5 bg-skeleton rounded-md" />
       </div>
 
-      <div className="border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl overflow-hidden bg-white dark:bg-zinc-950 flex flex-col flex-1 min-h-0">
-        <div className="flex items-center justify-between px-4 py-3 border-b border-dashed border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/50 shrink-0">
-          <div className="h-3 w-32 bg-skeleton rounded-md" />
-          <div className="size-4 bg-skeleton rounded-sm" />
-        </div>
-        <div className="flex-1 min-h-0 w-full bg-skeleton" />
-      </div>
-
-      <div className="pt-6 border-t border-dashed border-zinc-300 dark:border-zinc-700 shrink-0">
-        <div className="flex flex-col sm:flex-row gap-3">
-          <div className="h-[46px] flex-1 bg-skeleton rounded-md" />
-          <div className="h-[46px] flex-1 bg-skeleton rounded-md" />
+      <div className="space-y-3">
+        <div className="h-5 w-24 bg-skeleton rounded-md mx-auto" />
+        <div className="flex items-center gap-4 p-4 verori-border rounded-xl">
+          <div className="size-10 bg-skeleton rounded-lg" />
+          <div className="space-y-2 flex-1">
+            <div className="h-4 w-48 bg-skeleton rounded-md" />
+            <div className="h-3 w-16 bg-skeleton rounded-md" />
+          </div>
         </div>
       </div>
     </div>
