@@ -23,11 +23,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Verori | Client Sign-off for Solo Consultants',
     description: 'Generate a secure link. Get a timestamped record of when your client viewed and approved the work.',
-    url: 'https://verori.vercel.app',
+    url: 'https://verori.app',
     siteName: 'Verori',
     images: [
       {
-        url: 'https://verori.vercel.app/og-image.png', // TODO
+        url: 'https://verori.app/og-image.jpeg',
         width: 1200,
         height: 630,
         alt: 'Verori Dashboard',
@@ -41,6 +41,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+      <link rel="icon" href="/favicon.ico" sizes="any" />
+      <link rel="icon" href="/icon0.svg" type="image/svg+xml" />
+      <link rel="icon" href="/icon1.png" type="image/png" />
+      <link rel="apple-touch-icon" href="/apple-icon.png" />
       <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-950 dark:bg-zinc-950 dark:text-zinc-50 transition-colors font-sans texture-overlay">
         {children}
         <Analytics />
