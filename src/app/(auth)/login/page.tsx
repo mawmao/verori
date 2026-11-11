@@ -1,4 +1,4 @@
-import { VeroriIcon } from '@/components/icon/verori'
+import { BrandLogo } from '@/components/brand-logo'
 import { LoginForm } from '@/features/auth/components/client/login-form'
 import { Metadata } from 'next'
 import Link from 'next/link'
@@ -13,12 +13,7 @@ export default function Login() {
       <div className="flex flex-col gap-6 items-start text-left w-full max-w-[400px] px-6">
 
         <div className="space-y-2 w-full">
-          <div className='flex gap-2 items-center'>
-            <VeroriIcon className='size-8' />
-            <h1 className="text-4xl font-semibold tracking-tighter uppercase text-zinc-950 dark:text-zinc-50 flex items-center gap-4">
-              Verori
-            </h1>
-          </div>
+          <BrandLogo iconSize='size-8' textSize='text-4xl' />
           <p className="text-sm text-zinc-500 dark:text-zinc-400">
             Welcome back. Sign in or create an account to manage your approvals.
           </p>
