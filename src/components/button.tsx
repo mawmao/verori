@@ -1,4 +1,5 @@
 import { Spinner } from "@/components/spinner"
+import { cn } from "./util"
 
 type ButtonVariant = "primary" | "secondary" | "outline" | "ghost"
 
@@ -42,7 +43,7 @@ export function Button<C extends React.ElementType = "button">({
       {...(isButton
         ? { disabled: isDisabled }
         : { "aria-disabled": isDisabled })}
-      className={`${baseClasses} ${variantClasses[variant]} ${isIcon ? iconClasses : ""}${className ? ` ${className}` : ""}`}
+      className={cn(baseClasses, variantClasses[variant], isIcon && iconClasses, className)}
       {...props}
     >
       {isLoading && (variant === "primary" || variant === "secondary") && <Spinner />}
