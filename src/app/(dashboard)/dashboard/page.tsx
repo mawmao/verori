@@ -110,21 +110,10 @@ async function PortalDetailData({ searchParams }: { searchParams: Promise<Search
             </p>
           </div>
         </div>
-
         <div className="space-y-3">
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-zinc-500">
-            Deliverable
-          </h2>
           <FileEntry file={fileData} signedUrl={fileData?.signedUrl} />
-        </div>
-
-        <div className="space-y-3">
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-zinc-500">
-            Activity Ledger
-          </h2>
           <ActivityLog events={events} />
         </div>
-
       </div>
     </div>
   )
