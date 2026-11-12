@@ -24,7 +24,7 @@ export function TimelineItem({ title, timestamp, tone = "neutral", isLast, child
       icon: <div className="size-1.5 rounded-full bg-white" />
     },
     success: {
-      dot: "bg-teal-500",
+      dot: "bg-emerald-600",
       icon: <CheckIcon className="size-2.5 text-white" />
     },
     warning: {
@@ -43,7 +43,7 @@ export function TimelineItem({ title, timestamp, tone = "neutral", isLast, child
           <span className="w-[2px] flex-1 bg-zinc-200 dark:bg-zinc-800 my-1" />
         )}
       </div>
-      <div className={cn("flex-1 flex flex-col", !isLast && "pb-4")}>
+      <div className={cn("flex-1 flex flex-col justify-center", !isLast && "pb-4")}>
         <div className="flex items-center justify-between gap-4 h-4">
           <p className="text-xs font-medium text-zinc-950 dark:text-zinc-50 capitalize leading-none">
             {title}
