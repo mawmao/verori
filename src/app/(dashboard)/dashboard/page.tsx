@@ -10,6 +10,7 @@ import { Metadata } from "next"
 import { DashboardProvider } from "@/features/portal/components/client/dashboard-context"
 import { ActivityLog } from "@/features/portal/components/activity-log"
 import { FileEntry } from "@/components/file-entry"
+import { EditContextNote } from "@/features/portal/components/client/edit-context-note"
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const { portal: portalId } = await searchParams
@@ -91,6 +92,8 @@ async function PortalDetailData({ searchParams }: { searchParams: Promise<Search
   const portal = await getPortalMetadata(shareToken)
   if (!portal) return null
 
+  const isSent = portal.status === "sent"
+
   const events = await getPortalEvents(portal.id)
   const fileData = await getPortalFile(portal.id)
 
@@ -101,9 +104,17 @@ async function PortalDetailData({ searchParams }: { searchParams: Promise<Search
       <div className="flex flex-col gap-8">
 
         <div className="space-y-3">
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-zinc-500">
-            Context Note
-          </h2>
+          <div className="flex items-center ">
+            <h2 className="text-sm font-semibold uppercase tracking-widest text-zinc-500">
+              Context Note
+            </h2>
+            {isSent && (
+              <EditContextNote
+                portalId={portal.id}
+                initialNote={portal.context_note || ""}
+              />
+            )}
+          </div>
           <div className="p-5 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl bg-zinc-50 dark:bg-zinc-950/50">
             <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed whitespace-pre-wrap italic">
               "{portal.context_note || "No context note provided."}"
