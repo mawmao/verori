@@ -1,22 +1,14 @@
 import Link from "next/link"
-import { getPortals, Status } from "@/features/portal"
-import { DashboardEmpty } from "../../../app/(dashboard)/dashboard/_components/empty"
 import { PortalRow } from "./client/portal-row"
+import { Portal } from "../portal.types"
 
 interface Props {
-  searchParams: Promise<{ status?: Status }>
+  portals: Portal[],
 }
 
 export const PortalList = Object.assign(
-  async function PortalList({ searchParams }: Props) {
-    const { status: activeStatus } = await searchParams;
-    const portals = await getPortals()
-
-    const visiblePortals = activeStatus ? portals.filter((p) => p.status === activeStatus) : portals
-
-    if (portals.length === 0) return <DashboardEmpty />
-
-    if (visiblePortals.length === 0) {
+  function PortalList({ portals }: Props) {
+    if (portals.length === 0) {
       return (
         <div className="flex flex-col items-center justify-center verori-border rounded-xl py-20 text-center animate-in fade-in duration-300">
           <p className="text-sm font-medium text-zinc-950 dark:text-zinc-50">Nothing here yet</p>
@@ -32,7 +24,7 @@ export const PortalList = Object.assign(
 
     return (
       <ul className="flex flex-col gap-4 flex-1 min-h-0 overflow-y-auto pr-2 pb-4 animate-in fade-in duration-300">
-        {visiblePortals.map((portal) => (
+        {portals.map((portal) => (
           <PortalRow key={portal.id} portal={portal} />
         ))}
       </ul>
