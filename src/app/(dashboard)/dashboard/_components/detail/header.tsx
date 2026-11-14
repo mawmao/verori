@@ -2,6 +2,7 @@ import { Portal, StatusBadge } from "@/features/portal"
 import { CopyLinkButton } from "./copy-link-button"
 import { UserIcon } from "@/components/icon/user"
 import { CalendarIcon } from "@/components/icon/calendar"
+import { DeletePortalButton } from "@/features/portal/components/client/delete-portal-button"
 
 export const PortalHeader = Object.assign(
   async function PortalHeader({ portal }: { portal: Portal }) {
@@ -32,8 +33,9 @@ export const PortalHeader = Object.assign(
             </div>
           </div>
 
-          <div className="shrink-0 w-full lg:w-auto">
+          <div className="flex items-center gap-2 shrink-0 w-full lg:w-auto justify-end">
             <CopyLinkButton token={portal.share_token} />
+            <DeletePortalButton portalId={portal.id} />
           </div>
         </div>
       </div>
