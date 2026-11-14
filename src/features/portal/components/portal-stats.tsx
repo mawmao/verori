@@ -1,16 +1,15 @@
 import Link from "next/link"
-import { getPortals, STATUSES, Status } from "@/features/portal"
 import { cn } from "@/components/util";
+import { Portal, Status } from "../portal.types";
+import { STATUSES } from "./status-badge";
 
 interface Props {
-  searchParams: Promise<{ status?: Status }>
+  portals: Portal[],
+  activeStatus: Status | null
 }
 
 export const PortalStats = Object.assign(
-  async function PortalStats({ searchParams }: Props) {
-    const { status: activeStatus } = await searchParams;
-    const portals = await getPortals()
-
+  function PortalStats({ portals, activeStatus }: Props) {
     if (portals.length === 0) return null;
 
     const counts = STATUSES.reduce((acc, s) => {

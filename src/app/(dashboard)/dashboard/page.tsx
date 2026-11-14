@@ -1,8 +1,6 @@
 import { Suspense } from "react"
 import { CreatePortalDialog } from "@/features/portal/components/create-portal-dialog"
-import { getPortalEvents, getPortalFile, getPortalMetadata, Status } from "@/features/portal"
-import { PortalStats } from "../../../features/portal/components/portal-stats"
-import { PortalList } from "../../../features/portal/components/portal-list"
+import { getPortalEvents, getPortalFile, getPortalMetadata, getPortals, Status } from "@/features/portal"
 import { DashboardSidebar } from "./_components/sidebar"
 import { PortalHeader } from "./_components/detail/header"
 import { RouteModal } from "@/components/route-modal"
@@ -11,6 +9,7 @@ import { DashboardProvider } from "@/features/portal/components/client/dashboard
 import { ActivityLog } from "@/features/portal/components/activity-log"
 import { FileEntry } from "@/components/file-entry"
 import { EditContextNote } from "@/features/portal/components/client/edit-context-note"
+import { DashboardClient } from "./_components/client"
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const { portal: portalId } = await searchParams
@@ -40,7 +39,10 @@ interface Props {
   searchParams: Promise<SearchParams>
 }
 
-export default function DashboardList({ searchParams }: Props) {
+export default async function DashboardList({ searchParams }: Props) {
+  const portals = await getPortals()
+  const { status } = await searchParams
+
   return (
     <DashboardProvider>
       <div className="flex-1 flex flex-col min-h-0 w-full max-w-6xl mx-auto p-4 sm:py-8">
@@ -59,14 +61,10 @@ export default function DashboardList({ searchParams }: Props) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 flex-1 min-h-0">
-          <div className="lg:col-span-3 flex flex-col min-h-0 shrink-0">
-            <Suspense fallback={<PortalStats.Skeleton />}>
-              <PortalStats searchParams={searchParams} />
-            </Suspense>
-            <Suspense fallback={<PortalList.Skeleton />}>
-              <PortalList searchParams={searchParams} />
-            </Suspense>
-          </div>
+          <DashboardClient
+            initialPortals={portals}
+            initialStatus={status!}
+          />
           <div className="lg:col-span-1 min-h-0 overflow-y-auto hidden lg:block">
             <DashboardSidebar />
           </div>
