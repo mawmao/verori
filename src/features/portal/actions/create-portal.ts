@@ -86,16 +86,6 @@ export async function createPortal(formData: FormData) {
     throw new Error('Failed to save file record')
   }
 
-  const { error: activityError } = await supabase.from('activity_event').insert({
-    portal_id: portal.id,
-    type: 'created',
-    actor: 'consultant',
-  })
-
-  if (activityError) {
-    console.error("Failed to log activity:", activityError)
-  }
-
   revalidatePath('/dashboard')
   redirect(`/dashboard?portal=${portal.share_token}`)
 }
