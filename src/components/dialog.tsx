@@ -81,10 +81,11 @@ export const DialogClose = createDialogButton(false)
 
 interface DialogContentProps {
   children: ReactNode
-  className?: string
+  className?: string,
+  zIndex?: number
 }
 
-export function DialogContent({ children, className }: DialogContentProps) {
+export function DialogContent({ children, className, zIndex = 50 }: DialogContentProps) {
   const { isOpen, setIsOpen } = useDialog()
   const { mounted, visible } = useModalTransition(isOpen)
 
@@ -105,15 +106,17 @@ export function DialogContent({ children, className }: DialogContentProps) {
         aria-hidden="true"
         onClick={() => setIsOpen(false)}
         className={cn(
-          "fixed inset-0 z-40 bg-black/5 backdrop-blur-xs",
+          "fixed inset-0 bg-black/40 backdrop-blur-sm",
           "transition-opacity duration-150 ease-out motion-reduce:transition-none",
           visible ? "opacity-100" : "opacity-0"
         )}
+        style={{ zIndex: zIndex - 1 }}
       />
       <div
         role="dialog"
         aria-modal="true"
-        className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4"
+        className="pointer-events-none fixed inset-0 flex items-center justify-center p-4"
+        style={{ zIndex }}
       >
         <div
           className={cn(
