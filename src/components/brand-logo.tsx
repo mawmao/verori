@@ -9,7 +9,12 @@ interface Props {
   className?: string
 }
 
-export function BrandLogo({ href, iconSize = "size-6", textSize = "text-lg", className }: Props) {
+export function BrandLogo({
+  href = "/",
+  iconSize = "size-6",
+  textSize = "text-lg",
+  className
+}: Props) {
 
   const content = (
     <>
@@ -20,11 +25,15 @@ export function BrandLogo({ href, iconSize = "size-6", textSize = "text-lg", cla
     </>
   )
 
-  const baseClasses = cn("flex items-center gap-2", className)
+  const baseClasses = cn("group flex items-center gap-2", className)
 
   if (href) {
     return (
-      <Link href={href} className={cn(baseClasses, "hover:opacity-80 transition-opacity")}>
+      <Link
+        href={href}
+        className={cn(baseClasses, "hover:opacity-80 transition-opacity")}
+        aria-label="Go to Verori homepage"
+      >
         {content}
       </Link>
     )
