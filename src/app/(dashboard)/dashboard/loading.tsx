@@ -1,6 +1,6 @@
 export default function DashboardLoading() {
   return (
-    <main className="flex-1 w-full max-w-5xl mx-auto px-6 py-10 sm:py-12">
+    <main className="flex-1 w-full max-w-6xl mx-auto px-6 py-10 sm:py-12">
 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 p-6 sm:p-8 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl">
         <div className="space-y-2">

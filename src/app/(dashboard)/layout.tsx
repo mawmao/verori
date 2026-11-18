@@ -1,55 +1,102 @@
-import { SiteFooter } from "@/components/site-footer";
+import { SiteFooter } from "@/components/site-footer"
 import { verifySession } from "@/lib/dal"
 import { connection } from "next/server"
 import { UserMenu } from "@/components/user-menu"
-import { SiteHeader } from "@/components/site-header"
-import { Suspense } from "react";
+import { BrandLogo } from "@/components/brand-logo"
+import { Suspense } from "react"
+import Link from "next/link"
+import { cn } from "@/components/util"
 
 export default function DashboardGroupLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-dvh overflow-hidden flex flex-col">
-      <Suspense fallback={<HeaderSkeleton />}>
-        <Header />
+    <div className="h-dvh flex flex-col bg-zinc-50 dark:bg-zinc-950">
+      <Suspense fallback={<TopNavSkeleton />}>
+        <TopNav />
       </Suspense>
-      <main className="flex-1 flex flex-col min-h-0">
+
+      <main className="flex-1 overflow-y-auto">
         {children}
       </main>
-      <SiteFooter
-        links={[
-          { label: "Contact", href: "/contact" },
-          { label: "Terms", href: "/terms" },
-          { label: "Privacy", href: "/privacy" },
-          { label: "Cookies", href: "/cookies" },
-        ]}
-      />
+
+      <div className="border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+        <SiteFooter
+          links={[
+            { label: "Contact", href: "/contact" },
+            { label: "Terms", href: "/terms" },
+            { label: "Privacy", href: "/privacy" },
+          ]}
+        />
+      </div>
     </div>
   )
 }
 
-
-async function Header() {
+async function TopNav() {
   await connection()
   const { user } = await verifySession()
 
+  const currentPath = "/dashboard"
+
   return (
-    <SiteHeader>
-      <UserMenu email={user.email || ""} />
-    </SiteHeader>
+    <header className="sticky top-0 z-30 w-full border-b border-zinc-200 bg-white/80 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/80">
+      <div className="flex h-14 max-w-[1400px] mx-auto items-center justify-between px-6">
+        <div className="flex items-center gap-6">
+          <BrandLogo href="/dashboard" />
+
+          <nav className="flex items-center gap-1">
+            {/* Active Dashboard Link */}
+            <Link
+              href="/dashboard"
+              aria-label="Dashboard"
+              className={cn(
+                "text-sm px-2.5 py-1.5 flex items-center justify-center rounded-md transition-colors font-medium",
+                currentPath === "/dashboard"
+                  ? "bg-zinc-100 text-zinc-950 dark:bg-zinc-800 dark:text-zinc-50"
+                  : "text-zinc-500 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
+              )}
+            >
+              Dashboard
+            </Link>
+
+            <button
+              disabled
+              className="flex items-center gap-1.5 text-sm px-2.5 py-1.5 rounded-md text-zinc-400 dark:text-zinc-600 cursor-not-allowed select-none"
+              title="Client management is coming in a future update"
+            >
+              Clients
+              <span className="text-[8px] font-semibold uppercase tracking-wider bg-zinc-100 text-zinc-500 px-1.5 py-0.5 rounded-sm dark:bg-zinc-800 dark:text-zinc-400">
+                Soon
+              </span>
+            </button>
+
+            <button
+              disabled
+              className="flex items-center gap-1.5 text-sm px-2.5 py-1.5 rounded-md text-zinc-400 dark:text-zinc-600 cursor-not-allowed select-none"
+              title="File library is coming in a future update"
+            >
+              Uploaded Files
+              <span className="text-[8px] font-semibold uppercase tracking-wider bg-zinc-100 text-zinc-500 px-1.5 py-0.5 rounded-sm dark:bg-zinc-800 dark:text-zinc-400">
+                Soon
+              </span>
+            </button>
+          </nav>
+        </div>
+
+        <UserMenu email={user.email || ""} />
+      </div>
+    </header>
   )
 }
 
-function HeaderSkeleton() {
+function TopNavSkeleton() {
   return (
-    <header className="sticky top-0 z-30 w-full verori-border bg-zinc-50/80 dark:bg-zinc-950/80 backdrop-blur-md">
-      <div className="flex h-16 max-w-5xl mx-auto items-center justify-between px-6 sm:px-8 animate-pulse">
-        <div className="flex items-center gap-2">
+    <header className="sticky top-0 z-30 w-full border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
+      <div className="flex h-14 max-w-[1400px] mx-auto items-center justify-between px-6 animate-pulse">
+        <div className="flex items-center gap-8">
           <div className="size-6 bg-zinc-200 dark:bg-zinc-800 rounded-sm" />
-          <div className="h-5 w-20 bg-zinc-200 dark:bg-zinc-800 rounded-md" />
+          <div className="h-8 w-20 bg-zinc-200 dark:bg-zinc-800 rounded-md" />
         </div>
-        <div className="flex items-center gap-6">
-          <div className="h-4 w-32 bg-zinc-200 dark:bg-zinc-800 rounded-md hidden sm:block" />
-          <div className="h-4 w-12 bg-zinc-200 dark:bg-zinc-800 rounded-md" />
-        </div>
+        <div className="h-8 w-8 bg-zinc-200 dark:bg-zinc-800 rounded-full" />
       </div>
     </header>
   )
