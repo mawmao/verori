@@ -11,7 +11,8 @@ interface Props {
   href?: string
   isDone?: boolean
   size?: "sm" | "default"
-  className?: string
+  className?: string,
+  actionLabel?: string,
 }
 
 export function FileCard({
@@ -22,6 +23,7 @@ export function FileCard({
   isDone,
   size = "default",
   className,
+  actionLabel = "Preview File"
 }: Props) {
   const isSmall = size === "sm"
   const isInteractive = !!href
@@ -65,7 +67,7 @@ export function FileCard({
             rel="noopener noreferrer"
             icon={<ExternalLinkIcon className="size-4" />}
           >
-            Preview File
+            {actionLabel}
           </ActionBadge>
         )}
       </div>
