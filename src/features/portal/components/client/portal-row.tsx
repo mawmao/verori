@@ -11,16 +11,16 @@ export function PortalRow({ portal }: { portal: Portal }) {
   const { setOptimisticId } = useDashboard()
 
   return (
-    <li>
+    <li className="border-b border-zinc-100 last:border-b-0 dark:border-zinc-800">
       <Link
         href={`/dashboard?portal=${portal.share_token}`}
         scroll={false}
         onClick={() => setOptimisticId(portal.share_token)}
         className="block"
       >
-        <div className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-6 sm:py-5 transition-all gap-2 sm:gap-4 verori-border rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-900/50">
-          <div className="flex flex-col gap-1 min-w-0">
-            <span className="font-medium text-sm text-zinc-950 dark:text-zinc-50 group-hover:text-zinc-600 dark:group-hover:text-zinc-400 transition-colors truncate">
+        <div className="group flex items-center justify-between p-5 transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-900/50 cursor-pointer">
+          <div className="flex flex-col gap-1 min-w-0 pr-4">
+            <span className="font-medium text-sm text-zinc-950 dark:text-zinc-50 truncate">
               {portal.title}
             </span>
             <span className="text-xs text-zinc-500 dark:text-zinc-400 truncate">
@@ -28,13 +28,14 @@ export function PortalRow({ portal }: { portal: Portal }) {
             </span>
           </div>
 
-          <div className="flex items-center justify-between sm:justify-end gap-4 sm:gap-6 shrink-0">
-            <div className="flex items-center gap-4">
-              <StatusBadge status={portal.status} />
-              <RelativeTime className="w-16 hidden sm:block" date={portal.created_at} />
-            </div>
+          <div className="flex items-center gap-6 shrink-0">
+            <StatusBadge status={portal.status} />
+            <RelativeTime
+              className="w-16 text-xs font-mono text-zinc-400 dark:text-zinc-500 hidden sm:block text-right"
+              date={portal.last_activity_at}
+            />
             <ChevronRightIcon
-              className="size-4 text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-500 dark:group-hover:text-zinc-400 group-hover:translate-x-0.5 transition-all hidden sm:block"
+              className="size-4 text-zinc-300 dark:text-zinc-700 group-hover:text-zinc-500 dark:group-hover:text-zinc-400 group-hover:translate-x-0.5 transition-all"
               aria-hidden="true"
             />
           </div>

@@ -39,7 +39,7 @@ export function StatusBadge({ status, className, ...props }: Props) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full border",
+        "inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-md border",
         config?.badge ?? "bg-zinc-100 text-zinc-600 border-zinc-200 dark:bg-zinc-900 dark:text-zinc-400 dark:border-zinc-800",
         className
       )}
