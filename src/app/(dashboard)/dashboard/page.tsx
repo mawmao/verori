@@ -1,7 +1,6 @@
 import { Suspense } from "react"
 import { CreatePortalDialog } from "@/features/portal/components/create-portal-dialog"
 import { getPortalEvents, getPortalFile, getPortalMetadata, getPortals, Status } from "@/features/portal"
-import { DashboardSidebar } from "./_components/sidebar"
 import { PortalHeader } from "./_components/detail/header"
 import { RouteModal } from "@/components/route-modal"
 import { Metadata } from "next"
@@ -10,6 +9,10 @@ import { ActivityLog } from "@/features/portal/components/activity-log"
 import { FileEntry } from "@/components/file-entry"
 import { EditContextNote } from "@/features/portal/components/client/edit-context-note"
 import { DashboardClient } from "./_components/client"
+import { PortalStats } from "@/features/portal/components/portal-stats"
+import { RecentActivity } from "./_components/recent-activity"
+import { SignalBar } from "./_components/signal-bar"
+import { DoubleCheckIcon } from "@/components/icon/double-check"
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const { portal: portalId } = await searchParams
@@ -39,40 +42,52 @@ interface Props {
   searchParams: Promise<SearchParams>
 }
 
+
 export default async function DashboardList({ searchParams }: Props) {
   const portals = await getPortals()
   const { status } = await searchParams
 
   return (
     <DashboardProvider>
-      <div className="flex-1 flex flex-col min-h-0 w-full max-w-6xl mx-auto p-4 sm:py-8">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 p-6 verori-border rounded-xl shrink-0">
+      <div className="flex flex-col h-full max-w-[1400px] mx-auto p-6 sm:p-8">
+
+        <div className="flex items-center justify-between mb-6 shrink-0">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
-              Approvals
+            <h1 className="text-xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
+              Client Sign-offs
             </h1>
             <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-              Manage your client deliverables and track their status.
+              Triage deliverables and track client responses.
             </p>
           </div>
-          <div className="w-full sm:w-auto">
-            <CreatePortalDialog isIcon />
-          </div>
+          <CreatePortalDialog />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 flex-1 min-h-0">
-          <DashboardClient
-            initialPortals={portals}
-            initialStatus={status!}
-          />
-          <div className="lg:col-span-1 min-h-0 overflow-y-auto hidden lg:block">
-            <DashboardSidebar />
+        <div className="shrink-0 mb-1">
+          <SignalBar portals={portals} />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1 min-h-0 ">
+
+          <div className="lg:col-span-8 flex flex-col min-h-0 gap-1">
+            <div className="shrink-0">
+              <PortalStats portals={portals} activeStatus={status!} />
+            </div>
+            <div className="flex-1 min-h-0">
+              <DashboardClient initialPortals={portals} initialStatus={status!} />
+            </div>
+          </div>
+
+          <div className="lg:col-span-4 min-h-0 hidden lg:block">
+            <Suspense fallback={<div className="h-full border border-zinc-200 rounded-xl animate-pulse dark:border-zinc-800 bg-white dark:bg-zinc-950/50" />}>
+              <RecentActivity />
+            </Suspense>
           </div>
         </div>
 
         <Suspense fallback={null}>
-          <RouteModal param="portal" fallback={<PortalDetailSkeleton />} >
-            <Suspense fallback={<PortalDetailSkeleton />} >
+          <RouteModal param="portal" fallback={<PortalDetailSkeleton />}>
+            <Suspense fallback={<PortalDetailSkeleton />}>
               <PortalDetailData searchParams={searchParams} />
             </Suspense>
           </RouteModal>
@@ -96,10 +111,10 @@ async function PortalDetailData({ searchParams }: { searchParams: Promise<Search
   const fileData = await getPortalFile(portal.id)
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <PortalHeader portal={portal} />
 
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-6">
 
         <div className="space-y-3">
           <div className="flex items-center ">
@@ -119,7 +134,7 @@ async function PortalDetailData({ searchParams }: { searchParams: Promise<Search
             </p>
           </div>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-2">
           <FileEntry file={fileData} signedUrl={fileData?.signedUrl} />
           <ActivityLog events={events} />
         </div>
