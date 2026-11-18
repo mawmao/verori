@@ -1,6 +1,8 @@
 import { FileCard } from "@/components/file-card"
 
 export function FileEntry({ file, signedUrl }: { file: any, signedUrl: string | null | undefined }) {
+  const isPreviewable = file?.mime_type === "application/pdf" || file?.mime_type.startsWith("image/")
+
   if (!file || !signedUrl) {
     return (
       <div className="flex items-center justify-center p-6 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl">
@@ -15,6 +17,7 @@ export function FileEntry({ file, signedUrl }: { file: any, signedUrl: string | 
       meta={`${(file.size / 1024 / 1024).toFixed(2)} MB`}
       mimeType={file.mime_type}
       href={signedUrl}
+      actionLabel={isPreviewable ? "Preview File" : "Download File"}
     />
   )
 }
