@@ -14,37 +14,42 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://verori.app"),
   title: {
     template: '%s | Verori',
-    default: 'Verori | Client sign-off for solo consultants',
+    default: 'Verori | Timestamped proof of delivery for freelancers',
   },
-  description: 'Verori is the minimal client-approval portal for solo consultants. Generate a secure link, track when it is viewed, and get timestamped sign-offs without forcing your clients to create an account.',
-  keywords: ['client approval', 'freelance tools', 'client sign off', 'deliverable tracking', 'consultant software'],
+  description: 'Get timestamped proof of delivery for freelancers. Send the link, track when clients view it, and get an immutable approval record. No client login needed.',
+  keywords: ['client approval', 'freelance tools', 'client sign off', 'deliverable tracking', 'consultant software', 'timestamped proof of delivery'],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+    }
+  },
   openGraph: {
-    title: 'Verori | Client Sign-off for Solo Consultants',
-    description: 'Generate a secure link. Get a timestamped record of when your client viewed and approved the work.',
+    title: 'Verori | Timestamped proof of delivery for freelancers',
+    description: 'Timestamped proof of delivery for freelancers. Send one secure link and get an immutable record of when your client viewed and approved the work.',
     url: 'https://verori.app',
     siteName: 'Verori',
-    images: [
-      {
-        url: 'https://verori.app/og-image.jpeg',
-        width: 1200,
-        height: 630,
-        alt: 'Verori Dashboard',
-      },
-    ],
+    images: [{ url: '/og-image.jpeg', width: 1200, height: 630, alt: 'Verori Dashboard' }],
     locale: 'en_US',
     type: 'website',
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Verori | Timestamped proof of delivery for freelancers",
+    description: "Proof of who approved what, and when.",
+    images: ["/og-image.jpeg"],
   },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <link rel="icon" href="/favicon.ico" sizes="any" />
-      <link rel="icon" href="/icon0.svg" type="image/svg+xml" />
-      <link rel="icon" href="/icon1.png" type="image/png" />
-      <link rel="apple-touch-icon" href="/apple-icon.png" />
       <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-950 dark:bg-zinc-950 dark:text-zinc-50 transition-colors font-sans texture-overlay">
         {children}
         <Analytics />

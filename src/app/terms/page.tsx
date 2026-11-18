@@ -1,6 +1,14 @@
 import Link from "next/link"
 import { ArrowLeftIcon } from "@/components/icon/arrow-left"
 import { BrandLogo } from "@/components/brand-logo";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms of Service",
+  description: "Terms of Service for Verori, the timestamped proof of delivery platform for freelancers.",
+  alternates: { canonical: "https://verori.app/terms" },
+  robots: { index: false, follow: true }
+}
 
 const termlyHtml = `
       <div data-custom-class="body">
