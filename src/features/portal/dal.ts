@@ -11,7 +11,7 @@ export const getPortals = cache(async () => {
 
   const { data, error } = await supabase
     .from("portal")
-    .select("id, client_name, share_token, context_note, title, status, created_at")
+    .select("id, client_name, share_token, context_note, title, status, created_at, last_activity_at")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
 
@@ -30,7 +30,7 @@ export const getPortalMetadata = cache(async (shareToken: string) => {
 
   const { data } = await supabase
     .from("portal")
-    .select("id, title, client_name, status, share_token, created_at, context_note, file ( metadata )")
+    .select("id, title, client_name, status, share_token, created_at, last_activity_at, context_note, file ( metadata )")
     .eq("share_token", shareToken)
     .eq("user_id", user.id)
     .single()
@@ -133,3 +133,23 @@ export const trackPortalView = async (portalId: string) => {
       actor: "client",
     })
 }
+
+export const getRecentActivity = cache(async () => {
+  await connection()
+  const { user } = await verifySession()
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+    .from("activity_event")
+    .select("id, type, created_at, portal!inner(id, title, client_name)")
+    .eq("portal.user_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(5)
+
+  if (error) {
+    console.error("Error fetching recent activity:", error)
+    return []
+  }
+
+  return data ?? []
+})
