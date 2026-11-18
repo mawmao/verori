@@ -9,6 +9,7 @@ export interface Portal {
   title: string
   status: Status
   created_at: string,
+  last_activity_at: string,
   file?: {
     metadata?: {
       orientation?: 'portrait' | 'landscape'
