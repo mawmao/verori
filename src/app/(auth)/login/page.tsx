@@ -4,7 +4,10 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: "Login"
+  title: "Login",
+  description: "Log in to your Verori dashboard to manage client deliverables and track timestamped proof of approval.",
+  alternates: { canonical: "https://verori.app/login" },
+  robots: { index: false, follow: true }
 }
 
 export default function Login() {
