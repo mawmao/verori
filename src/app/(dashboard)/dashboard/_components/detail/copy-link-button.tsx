@@ -25,7 +25,7 @@ export function CopyLinkButton({ token }: { token: string }) {
   }
 
   return (
-    <div className="relative w-full sm:w-[320px] cursor-pointer" onClick={handleCopy} >
+    <div className="relative flex w-full sm:w-[280px] items-center">
       <div className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500 pointer-events-none">
         <LinksIcon className="size-4" />
       </div>
@@ -34,24 +34,23 @@ export function CopyLinkButton({ token }: { token: string }) {
         type="text"
         readOnly
         value={url || `/p/${token}`}
-        className="pl-9 pr-20 border-dashed border-zinc-400 text-zinc-400 dark:text-zinc-600 truncate select-none pointer-events-none"
+        onClick={(e) => e.currentTarget.select()}
+        className="w-full pl-9 pr-12 border-dashed border-zinc-300 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 truncate cursor-text select-text "
         aria-label="Client approval link"
       />
 
-      <div className="absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center">
+      <div className="absolute right-1.5 top-1/2 -translate-y-1/2">
         {copied ? (
-          <ActionBadge variant="success" size="sm">
+          <ActionBadge variant="success" size="sm" className="pointer-events-none">
+            <CheckIcon className="size-3 mr-1" />
             Copied
           </ActionBadge>
         ) : (
           <Button
             variant="ghost"
-            onClick={(e) => {
-              e.stopPropagation()
-              handleCopy()
-            }}
+            onClick={handleCopy}
             aria-label="Copy link"
-            className="w-auto! px-2.5! py-1! text-xs font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50 transition-all"
+            className="h-7 px-2.5 text-xs font-medium text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-50 dark:hover:bg-zinc-800 transition-all"
           >
             Copy
           </Button>
