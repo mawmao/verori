@@ -5,28 +5,27 @@ const freeFeatures = [
   "Secure, tokenized share links",
   "Timestamped view & approval logs",
   "PDF & image file previews",
-
-  // NOT YET IMPLEMENETED
-  // "Manual reminder triggers"
+  "Pre-written follow-up drafts for you to copy & paste",
 ]
 
 const topUpFeatures = [
   "5 additional approvals for a one-time $5",
   "Credits never expire across months",
   "No subscription, no recurring charge",
-  "Unlocks automatically when you hit the monthly limit",
+  "Top-up available the moment you reach the limit",
   "Same core features — no downgrade",
 ]
 
 const proFeatures = [
   "Unlimited approvals",
   "Branded client portals (your logo & colors)",
-  "One-click + opt-in automatic reminders",
+  "Automated email reminders sent to YOU (we never email your clients)",
   "PDF delivery record for invoicing & disputes",
   "Engagement summary export",
   "Watermarked previews until client approves",
   "Context-note templates for recurring work",
 ]
+
 
 export function PricingSection() {
   return (
