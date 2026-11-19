@@ -1,3 +1,5 @@
+import { FileEntry } from "@/components/file-entry"
+import { TimelineItem } from "@/features/portal/components/timeline-item"
 
 
 export function DifferenceSection() {
@@ -94,80 +96,34 @@ function OldWayMock() {
 
 function NewWayMock() {
   const events = [
-    { type: "created", title: "Link created", time: "Nov 18, 9:00 AM", tone: "neutral" as const },
-    { type: "viewed", title: "Viewed by client", time: "Nov 18, 9:15 AM", tone: "info" as const },
-    { type: "approved", title: "Approved", time: "Nov 18, 10:30 AM", tone: "success" as const },
+    { title: "created", timestamp: "Nov 18, 9:00 AM", tone: "neutral" as const },
+    { title: "viewed", timestamp: "Nov 18, 9:15 AM", tone: "viewed" as const },
+    { title: "approved", timestamp: "Nov 18, 10:30 AM", tone: "approved" as const },
   ]
 
   return (
-    <div className="space-y-4 rounded-xl border border-dashed border-zinc-300 bg-white p-5 shadow-xl shadow-zinc-200/50 dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-zinc-950/50">
+    <div className="space-y-4 rounded-xl border border-zinc-200 bg-white p-5 shadow-xl shadow-zinc-200/50 dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-zinc-950/50">
       <div className="space-y-2">
         <h3 className="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">Context Note</h3>
-        <div className="rounded-xl border border-dashed border-zinc-300 bg-zinc-50 p-4 dark:border-zinc-700 dark:bg-zinc-950/50">
+        <div className="rounded-xl border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-950/50">
           <p className="text-sm italic leading-relaxed text-zinc-700 dark:text-zinc-300">
             "Final audit for sign-off. Approval unblocks the implementation phase."
           </p>
         </div>
       </div>
+      <FileEntry file={{ name: "Q3-SEO-Audit.pdf", size: 2516582, mime_type: "application/pdf" }} signedUrl="#the-record" />
 
-      <div className="flex items-center justify-between rounded-xl border border-dashed border-zinc-300 bg-white p-4 transition-all hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-900/50">
-        <div className="flex items-center gap-4 min-w-0">
-          <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-zinc-100 text-zinc-500 dark:bg-zinc-800">
-            <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-            </svg>
-          </div>
-          <div className="flex flex-col min-w-0">
-            <span className="truncate text-sm font-medium text-zinc-950 dark:text-zinc-50">Q3-SEO-Audit.pdf</span>
-            <span className="text-xs text-zinc-500 dark:text-zinc-400">2.40 MB</span>
-          </div>
-        </div>
-        <div className="flex shrink-0 items-center gap-3">
-          <span className="flex size-4 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white">
-            <svg className="size-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-            </svg>
-          </span>
-          <span className="inline-flex items-center gap-1 rounded-md bg-zinc-950 px-2.5 py-1.5 text-[10px] font-medium text-white dark:bg-zinc-50 dark:text-zinc-950">
-            Preview File
-            <svg className="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-            </svg>
-          </span>
-        </div>
-      </div>
-
-      <div className="rounded-xl border border-dashed border-zinc-300 p-4 dark:border-zinc-700">
-        <ul className="flex flex-col gap-2">
-          {events.map((event, index) => {
-            const isLast = index === events.length - 1
-            const styles = {
-              neutral: { dot: "bg-zinc-300 dark:bg-zinc-600", icon: <div className="size-1.5 rounded-full bg-white dark:bg-zinc-900" /> },
-              info: { dot: "bg-blue-500", icon: <div className="size-1.5 rounded-full bg-white" /> },
-              success: { dot: "bg-emerald-600", icon: <svg className="size-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg> },
-            }[event.tone]
-
-            return (
-              <li key={event.type} className="flex gap-2.5">
-                <div className="flex flex-col items-center">
-                  <span className={`flex size-5 shrink-0 items-center justify-center rounded-full border-2 border-white dark:border-zinc-950 ${styles.dot}`}>
-                    {styles.icon}
-                  </span>
-                  {!isLast && <span className="w-[2px] flex-1 bg-zinc-200 dark:bg-zinc-800 my-1" />}
-                </div>
-                <div className={`flex-1 flex flex-col justify-center ${!isLast ? "pb-4" : ""}`}>
-                  <div className="flex items-center justify-between gap-4 h-4">
-                    <p className="text-xs font-medium capitalize leading-none text-zinc-950 dark:text-zinc-50">
-                      {event.title}
-                    </p>
-                    <time className="font-mono text-[10px] font-medium leading-none tracking-wide text-zinc-400 dark:text-zinc-500">
-                      {event.time}
-                    </time>
-                  </div>
-                </div>
-              </li>
-            )
-          })}
+      <div className="p-4 rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900/40">
+        <ul className="flex flex-col">
+          {events.map((event, index) => (
+            <TimelineItem
+              key={event.title}
+              title={event.title}
+              timestamp={event.timestamp}
+              tone={event.tone}
+              isLast={index === events.length - 1}
+            />
+          ))}
         </ul>
       </div>
     </div>

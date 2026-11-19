@@ -6,51 +6,66 @@ import { Input } from "@/components/input"
 import { ActionBadge } from "@/components/action-badge"
 import { LinksIcon } from "@/components/icon/links"
 import { CheckIcon } from "@/components/icon/check"
+import { cn } from "@/components/util"
 
-export function CopyLinkButton({ token }: { token: string }) {
+interface CopyLinkButtonProps {
+  token: string
+  baseUrl?: string
+  className?: string
+}
+
+export function CopyLinkButton({ token, baseUrl, className }: CopyLinkButtonProps) {
   const [copied, setCopied] = useState(false)
-  const [url, setUrl] = useState("")
+  const [origin, setOrigin] = useState(baseUrl ?? "")
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setUrl(`${window.location.origin}/p/${token}`)
+    if (baseUrl) {
+      setOrigin(baseUrl)
+    } else if (typeof window !== "undefined") {
+      setOrigin(window.location.origin)
     }
-  }, [token])
+  }, [baseUrl])
+
+  const fullUrl = origin ? `${origin.replace(/\/$/, "")}/p/${token}` : `/p/${token}`
+  const displayValue = baseUrl
+    ? `${baseUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")}/p/${token}`
+    : fullUrl
 
   const handleCopy = () => {
-    if (!url) return
-    navigator.clipboard.writeText(url)
+    if (!fullUrl) return
+    navigator.clipboard?.writeText(fullUrl).catch(() => {})
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
 
   return (
-    <div className="relative flex w-full sm:w-[280px] items-center">
-      <div className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500 pointer-events-none">
-        <LinksIcon className="size-4" />
+    <div className={cn("relative flex w-full items-center", className)}>
+      <div className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500">
+        <LinksIcon className="size-3.5" />
       </div>
 
       <Input
         type="text"
         readOnly
-        value={url || `/p/${token}`}
+        value={displayValue}
         onClick={(e) => e.currentTarget.select()}
-        className="w-full pl-9 pr-12 border-dashed border-zinc-300 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 truncate cursor-text select-text "
+        className="w-full cursor-text select-text truncate border-dashed border-zinc-300 bg-zinc-50/70 pl-9 pr-20 font-mono text-[11px] text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900/50 dark:text-zinc-300"
         aria-label="Client approval link"
       />
 
       <div className="absolute right-1.5 top-1/2 -translate-y-1/2">
         {copied ? (
           <ActionBadge variant="success" size="sm" className="pointer-events-none">
-            <CheckIcon className="size-3 mr-1" />
+            <CheckIcon className="size-3" />
             Copied
           </ActionBadge>
         ) : (
           <Button
+            type="button"
             variant="ghost"
             onClick={handleCopy}
             aria-label="Copy link"
-            className="h-7 px-2.5 text-xs font-medium text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-50 dark:hover:bg-zinc-800 transition-all"
+            className="h-7 w-auto rounded-sm px-2.5 text-[11px] font-medium text-zinc-600 transition-all hover:bg-zinc-200/70 hover:text-zinc-950 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
           >
             Copy
           </Button>

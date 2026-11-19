@@ -1,4 +1,3 @@
-// activity-log.tsx
 import { TimeIcon } from "@/components/icon/time"
 import { TimelineItem, TimelineTone } from "./timeline-item"
 
