@@ -2,7 +2,6 @@ import { getPortalByToken } from "@/features/portal/dal"
 import { Metadata } from "next"
 import { Suspense } from "react"
 import { PortalContent, PortalSkeleton } from "@/features/portal/components/client/portal-content"
-import { BrandLogo } from "@/components/brand-logo"
 
 interface Props {
   params: Promise<{ token: string }>
@@ -27,13 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default function ClientPortal({ params }: Props) {
   return (
-    <main className="flex-1 flex flex-col items-center justify-center w-full min-h-0 overflow-y-auto p-6 sm:p-12">
-      <div className="w-full max-w-xl flex flex-col gap-10 my-auto">
-        <BrandLogo className="justify-center" />
-        <Suspense fallback={<PortalSkeleton />}>
-          <PortalContent params={params} />
-        </Suspense>
-      </div>
-    </main>
+    <Suspense fallback={<PortalSkeleton />}>
+      <PortalContent params={params} />
+    </Suspense>
   )
 }
