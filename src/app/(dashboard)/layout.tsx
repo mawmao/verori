@@ -14,19 +14,20 @@ export default function DashboardGroupLayout({ children }: { children: React.Rea
         <TopNav />
       </Suspense>
 
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 min-h-0 overflow-y-auto">
         {children}
       </main>
 
-      <div className="border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
-        <SiteFooter
-          links={[
-            { label: "Contact", href: "/contact" },
-            { label: "Terms", href: "/terms" },
-            { label: "Privacy", href: "/privacy" },
-          ]}
-        />
-      </div>
+      <footer className="shrink-0 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 py-3">
+        <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between text-xs text-zinc-400 dark:text-zinc-500">
+          <span>© 2026 Verori</span>
+          <div className="flex gap-4">
+            <Link href="/contact" className="hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors">Feedback</Link>
+            <Link href="/terms" className="hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors">Terms</Link>
+            <Link href="/privacy" className="hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors">Privacy</Link>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
@@ -44,7 +45,6 @@ async function TopNav() {
           <BrandLogo href="/dashboard" />
 
           <nav className="flex items-center gap-1">
-            {/* Active Dashboard Link */}
             <Link
               href="/dashboard"
               aria-label="Dashboard"

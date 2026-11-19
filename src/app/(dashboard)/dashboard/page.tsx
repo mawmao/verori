@@ -8,11 +8,10 @@ import { DashboardProvider } from "@/features/portal/components/client/dashboard
 import { ActivityLog } from "@/features/portal/components/activity-log"
 import { FileEntry } from "@/components/file-entry"
 import { EditContextNote } from "@/features/portal/components/client/edit-context-note"
-import { DashboardClient } from "./_components/client"
-import { PortalStats } from "@/features/portal/components/portal-stats"
-import { RecentActivity } from "./_components/recent-activity"
 import { SignalBar } from "./_components/signal-bar"
-import { DoubleCheckIcon } from "@/components/icon/double-check"
+import { DashboardView } from "./_components/view"
+import { getRecentActivity } from "@/features/portal/dal"
+import { PortalDetailData, PortalDetailSkeleton } from "./_components/detail"
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const { portal: portalId } = await searchParams
@@ -41,49 +40,23 @@ interface SearchParams {
 interface Props {
   searchParams: Promise<SearchParams>
 }
-
-
 export default async function DashboardList({ searchParams }: Props) {
   const portals = await getPortals()
   const { status } = await searchParams
+
+  const events = await getRecentActivity()
 
   return (
     <DashboardProvider>
       <div className="flex flex-col h-full max-w-[1400px] mx-auto p-6 sm:p-8">
 
-        <div className="flex items-center justify-between mb-6 shrink-0">
-          <div>
-            <h1 className="text-xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
-              Client Sign-offs
-            </h1>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-              Triage deliverables and track client responses.
-            </p>
-          </div>
-          <CreatePortalDialog />
-        </div>
+        <DashboardHeader />
 
-        <div className="shrink-0 mb-1">
+        <div className="shrink-0 mb-6">
           <SignalBar portals={portals} />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1 min-h-0 ">
-
-          <div className="lg:col-span-8 flex flex-col min-h-0 gap-1">
-            <div className="shrink-0">
-              <PortalStats portals={portals} activeStatus={status!} />
-            </div>
-            <div className="flex-1 min-h-0">
-              <DashboardClient initialPortals={portals} initialStatus={status!} />
-            </div>
-          </div>
-
-          <div className="lg:col-span-4 min-h-0 hidden lg:block">
-            <Suspense fallback={<div className="h-full border border-zinc-200 rounded-xl animate-pulse dark:border-zinc-800 bg-white dark:bg-zinc-950/50" />}>
-              <RecentActivity />
-            </Suspense>
-          </div>
-        </div>
+        <DashboardView portals={portals} status={status ?? null} events={events} />
 
         <Suspense fallback={null}>
           <RouteModal param="portal" fallback={<PortalDetailSkeleton />}>
@@ -97,81 +70,21 @@ export default async function DashboardList({ searchParams }: Props) {
   )
 }
 
-async function PortalDetailData({ searchParams }: { searchParams: Promise<SearchParams> }) {
-  const { portal: shareToken } = await searchParams
 
-  if (!shareToken) return <PortalDetailSkeleton />
-
-  const portal = await getPortalMetadata(shareToken)
-  if (!portal) return null
-
-  const isSent = portal.status === "sent"
-
-  const events = await getPortalEvents(portal.id)
-  const fileData = await getPortalFile(portal.id)
-
+function DashboardHeader() {
   return (
-    <div className="space-y-6">
-      <PortalHeader portal={portal} />
-
-      <div className="flex flex-col gap-6">
-
-        <div className="space-y-3">
-          <div className="flex items-center ">
-            <h2 className="text-sm font-semibold uppercase tracking-widest text-zinc-500">
-              Context Note
-            </h2>
-            {isSent && (
-              <EditContextNote
-                portalId={portal.id}
-                initialNote={portal.context_note || ""}
-              />
-            )}
-          </div>
-          <div className="p-5 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl bg-zinc-50 dark:bg-zinc-950/50">
-            <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed whitespace-pre-wrap italic">
-              "{portal.context_note || "No context note provided."}"
-            </p>
-          </div>
-        </div>
-        <div className="space-y-2">
-          <FileEntry file={fileData} signedUrl={fileData?.signedUrl} />
-          <ActivityLog events={events} />
-        </div>
+    <div className="flex items-center justify-between mb-6 shrink-0">
+      <div>
+        <h1 className="text-xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
+          Client Sign-offs
+        </h1>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+          Triage deliverables and track client responses.
+        </p>
       </div>
+      <CreatePortalDialog />
     </div>
   )
 }
 
-function PortalDetailSkeleton() {
-  return (
-    <div className="pt-12 space-y-8">
-      <PortalHeader.Skeleton />
 
-      <div className="flex flex-col gap-8">
-
-        <div className="space-y-3 animate-pulse">
-          <div className="h-5 w-28 bg-skeleton rounded-md" />
-          <div className="h-[86px] w-full bg-skeleton border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl" />
-        </div>
-
-        <div className="space-y-3 animate-pulse">
-          <div className="h-5 w-24 bg-skeleton rounded-md" />
-          <div className="flex items-center gap-4 p-4 verori-border rounded-xl">
-            <div className="size-10 shrink-0 bg-skeleton rounded-lg" />
-            <div className="space-y-2 flex-1">
-              <div className="h-4 w-48 bg-skeleton rounded-md" />
-              <div className="h-3 w-16 bg-skeleton rounded-md" />
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-3 animate-pulse">
-          <div className="h-5 w-32 bg-skeleton rounded-md" />
-          <div className="h-[120px] w-full bg-skeleton border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl" />
-        </div>
-
-      </div>
-    </div>
-  )
-}
