@@ -11,8 +11,9 @@ interface Props {
   href?: string
   isDone?: boolean
   size?: "sm" | "default"
-  className?: string,
-  actionLabel?: string,
+  className?: string
+  actionLabel?: string
+  onClick?: () => void
 }
 
 export function FileCard({
@@ -23,32 +24,29 @@ export function FileCard({
   isDone,
   size = "default",
   className,
-  actionLabel = "Preview File"
+  actionLabel = "Preview File",
+  onClick,
 }: Props) {
   const isSmall = size === "sm"
-  const isInteractive = !!href
+  const isInteractive = !!href || !!onClick
 
   return (
     <div
+      onClick={onClick}
       className={cn(
         "flex flex-col sm:flex-row sm:items-center justify-between verori-border rounded-xl transition-all gap-4",
         isSmall ? "p-3" : "p-4",
-        isInteractive && "hover:bg-zinc-50 dark:hover:bg-zinc-900/50",
+        isInteractive && "hover:bg-zinc-50 dark:hover:bg-zinc-900/50 cursor-pointer",
         className
       )}
     >
       <div className={cn("flex items-center min-w-0", isSmall ? "gap-3" : "gap-4")}>
-        <div className={cn("flex shrink-0 items-center justify-center rounded-md bg-zinc-100 text-zinc-500 dark:bg-zinc-800", isSmall ? "size-8" : "size-10")} >
+        <div className={cn("flex shrink-0 items-center justify-center rounded-md bg-zinc-100 text-zinc-500 dark:bg-zinc-800", isSmall ? "size-8" : "size-10")}>
           <FileTypeIcon mimeType={mimeType} className={isSmall ? "size-4" : "size-5"} />
         </div>
-
         <div className="flex flex-col min-w-0">
-          <span className={cn("truncate font-medium text-zinc-950 dark:text-zinc-50", isSmall ? "text-xs" : "text-sm")} >
-            {name}
-          </span>
-          <span className={cn("text-zinc-500 dark:text-zinc-400", isSmall ? "text-[10px]" : "text-xs")} >
-            {meta}
-          </span>
+          <span className={cn("truncate font-medium text-zinc-950 dark:text-zinc-50", isSmall ? "text-xs" : "text-sm")}>{name}</span>
+          <span className={cn("text-zinc-500 dark:text-zinc-400", isSmall ? "text-[10px]" : "text-xs")}>{meta}</span>
         </div>
       </div>
 
@@ -60,15 +58,25 @@ export function FileCard({
         )}
 
         {isInteractive && (
-          <ActionBadge
-            as="a"
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            icon={<ExternalLinkIcon className="size-4" />}
-          >
-            {actionLabel}
-          </ActionBadge>
+          href ? (
+            <ActionBadge
+              as="a"
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              icon={<ExternalLinkIcon className="size-4" />}
+            >
+              {actionLabel}
+            </ActionBadge>
+          ) : (
+            <ActionBadge
+              as="button"
+              type="button"
+              icon={<ExternalLinkIcon className="size-4" />}
+            >
+              {actionLabel}
+            </ActionBadge>
+          )
         )}
       </div>
     </div>

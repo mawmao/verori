@@ -1,3 +1,4 @@
+import { cn } from "@/components/util"
 import { FileCard } from "@/components/file-card"
 
 function formatFileSize(bytes?: number | null) {
@@ -6,13 +7,19 @@ function formatFileSize(bytes?: number | null) {
   return `${(bytes / (1024 * 1024)).toFixed(2)} MB`
 }
 
+interface FileEntryProps {
+  file: any
+  signedUrl: string | null | undefined
+  onClick?: () => void
+  className?: string
+}
+
 export function FileEntry({
   file,
   signedUrl,
-}: {
-  file: any
-  signedUrl: string | null | undefined
-}) {
+  onClick,
+  className,
+}: FileEntryProps) {
   const isPreviewable =
     file?.mime_type === "application/pdf" ||
     file?.mime_type?.startsWith("image/")
@@ -30,10 +37,11 @@ export function FileEntry({
       name={file.name}
       meta={formatFileSize(file.size)}
       mimeType={file.mime_type}
-      href={signedUrl}
+      href={onClick ? undefined : signedUrl}
       actionLabel={isPreviewable ? "Preview File" : "Download File"}
+      onClick={onClick}
       size="sm"
-      className="bg-white dark:bg-zinc-900/40"
+      className={cn("bg-white dark:bg-zinc-900/40", className)}
     />
   )
 }

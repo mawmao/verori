@@ -1,4 +1,3 @@
-import { SiteFooter } from "@/components/site-footer"
 import { verifySession } from "@/lib/dal"
 import { connection } from "next/server"
 import { UserMenu } from "@/components/user-menu"
