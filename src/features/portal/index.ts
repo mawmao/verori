@@ -2,5 +2,5 @@ export { getPortals, getPortalMetadata, getPortalFile, getPortalEvents } from ".
 
 export type { Status, Portal } from "./portal.types"
 
-export { StatusBadge, STATUSES } from "./components/status-badge"
+export { StatusBadge } from "./components/status-badge"
 
