@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   title: "Login",
   description: "Log in to your Verori dashboard to manage client deliverables and track timestamped proof of approval.",
   alternates: { canonical: "https://verori.app/login" },
-  robots: { index: false, follow: true }
 }
 
 

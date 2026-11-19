@@ -6,15 +6,8 @@ import { HowItWorksSection } from "./_components/section-how-it-works"
 import { FinalCTASection } from "./_components/section-final-cta"
 import { LandingHeader } from "./_components/landing-header"
 import { Metadata } from "next"
+import { siteFooterLinks } from "@/lib/links"
 
-const siteFooterLinks = [
-  { label: "Pricing", href: "/pricing" },
-  { label: "Contact", href: "/contact" },
-  { label: "Terms", href: "/terms" },
-  { label: "Refund", href: "/refund" },
-  { label: "Privacy", href: "/privacy" },
-  { label: "GitHub", href: "https://github.com/mawmao/verori" },
-]
 
 const jsonLd = {
   "@context": "https://schema.org",
