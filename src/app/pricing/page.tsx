@@ -15,21 +15,32 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: "How does Verori pricing work?",
-    a: "Start free with 3 approvals per month. When you need more, buy a $5 top-up for 5 additional credits — a one-time charge with no subscription. An optional Pro subscription with unlimited approvals and advanced features is coming later.",
+    a: "**Start free with 3 approvals per month.** When you need more, buy a $5 top-up for 5 additional credits — a **one-time charge with no subscription**. An optional Pro subscription with advanced features is coming later.",
   },
   {
     q: "Do my purchased credits expire?",
-    a: "No. Credits you buy carry across months until you use them. There is no expiry and no recurring billing.",
+    a: "**No.** Credits you buy carry across months until you use them. There is **no expiry and no recurring billing**.",
   },
   {
     q: "Is there a monthly limit on the free plan?",
-    a: "Yes. The free plan includes 3 successful approvals per calendar month. You can top up to continue immediately, or wait for the quota to reset on the 1st of the next month.",
+    a: "Yes. The free plan includes **3 successful approvals per calendar month**. You can top up to continue immediately, or wait for the quota to reset on the 1st of the next month.",
   },
   {
     q: "Do my clients need to create an account to approve work?",
-    a: "Never. Verori is built on the principle of zero client friction. They access deliverables via a secure, tokenized link with no login or onboarding required.",
+    a: "**Never.** Verori is built on the principle of zero client friction. They access deliverables via a secure, tokenized link with **no login or onboarding required**.",
   },
+  {
+    q: "Does Verori send emails directly to my clients?",
+    a: "No. We believe you should maintain **complete control** over your client relationships. In the Free tier, we provide pre-written follow-up drafts for you to copy and paste. In the Pro tier, we send automated email reminders to **you** when a client goes silent. **Verori never emails your clients directly.**"
+  }
 ]
+
+const formatAnswer = (text: string) => {
+  return text.replace(
+    /\*\*(.*?)\*\*/g,
+    '<strong class="font-medium text-zinc-700 dark:text-zinc-300">$1</strong>'
+  )
+}
 
 const faqJsonLd = {
   "@context": "https://schema.org",
@@ -39,7 +50,7 @@ const faqJsonLd = {
     name: faq.q,
     acceptedAnswer: {
       "@type": "Answer",
-      text: faq.a
+      text: faq.a.replace(/\*\*/g, '')
     }
   }))
 }
@@ -47,7 +58,10 @@ const faqJsonLd = {
 export default function PricingPage() {
   return (
     <div className="texture-overlay flex min-h-screen flex-col bg-zinc-50 antialiased dark:bg-zinc-950">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
+      />
 
       <LandingHeader />
 
@@ -99,9 +113,10 @@ export default function PricingPage() {
                     <CheckIcon className="mt-0.5 size-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
                     {faq.q}
                   </h3>
-                  <p className="text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 pl-6">
-                    {faq.a}
-                  </p>
+                  <p
+                    className="text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 pl-6"
+                    dangerouslySetInnerHTML={{ __html: formatAnswer(faq.a) }}
+                  />
                 </div>
               ))}
             </div>
