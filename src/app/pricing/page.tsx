@@ -43,6 +43,7 @@ const siteFooterLinks = [
   { label: "Pricing", href: "/pricing" },
   { label: "Contact", href: "/contact" },
   { label: "Terms", href: "/terms" },
+  { label: "Refund", href: "/refund" },
   { label: "Privacy", href: "/privacy" },
   { label: "GitHub", href: "https://github.com/mawmao/verori" },
 ]

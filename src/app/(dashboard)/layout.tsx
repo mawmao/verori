@@ -24,6 +24,7 @@ export default function DashboardGroupLayout({ children }: { children: React.Rea
           <div className="flex gap-4">
             <Link href="/contact" className="hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors">Feedback</Link>
             <Link href="/terms" className="hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors">Terms</Link>
+            <Link href="/refund" className="hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors">Refund</Link>
             <Link href="/privacy" className="hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors">Privacy</Link>
           </div>
         </div>
