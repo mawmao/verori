@@ -6,19 +6,23 @@ import { FinalCTASection } from "../_components/section-final-cta"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Pricing & Roadmap",
-  description: "Verori is free during Public Beta. See what is included now and what is coming in Future Pro for freelancers seeking timestamped proof of delivery.",
+  title: "Pricing",
+  description: "Verori uses simple pay-as-you-go pricing: 3 free approvals per month, $5 top-ups when you need more, and an optional Pro subscription coming soon. No forced subscriptions.",
   alternates: { canonical: "https://verori.app/pricing" }
 }
 
 const faqs = [
   {
-    q: "Will I lose access to my portals when Verori starts charging?",
-    a: "No. Early adopters are guaranteed the most favorable founding-tier pricing or extended free access. You will receive at least 30 days' notice before any changes take effect.",
+    q: "How does Verori pricing work?",
+    a: "Start free with 3 approvals per month. When you need more, buy a $5 top-up for 5 additional credits — a one-time charge with no subscription. An optional Pro subscription with unlimited approvals and advanced features is coming later.",
   },
   {
-    q: "Is there a limit to how many clients I can send links to?",
-    a: "None. During the Public Beta, all portals, file uploads, and activity logs are completely unlimited.",
+    q: "Do my purchased credits expire?",
+    a: "No. Credits you buy carry across months until you use them. There is no expiry and no recurring billing.",
+  },
+  {
+    q: "Is there a monthly limit on the free plan?",
+    a: "Yes. The free plan includes 3 successful approvals per calendar month. You can top up to continue immediately, or wait for the quota to reset on the 1st of the next month.",
   },
   {
     q: "Do my clients need to create an account to approve work?",
@@ -69,7 +73,7 @@ export default function PricingPage() {
                 <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
               </span>
               <span className="text-[10px] font-medium uppercase tracking-widest text-emerald-700 dark:text-emerald-400">
-                Public Beta · Free
+                Pay-as-you-go · No subscription
               </span>
             </div>
 
@@ -78,12 +82,12 @@ export default function PricingPage() {
             </h1>
 
             <p className="mt-3 max-w-lg text-base leading-relaxed text-zinc-500 dark:text-zinc-400">
-              Verori is currently <span className="font-medium text-zinc-950 dark:text-zinc-50">100% free</span> during our Public Beta. We are building the ultimate timestamped proof of delivery tool for freelancers, and we want you to shape it with us.
+              Start free with <span className="font-medium text-zinc-950 dark:text-zinc-50">3 approvals every month</span>. Need more? Top up $5 for 5 credits, one time, no subscription. We are building the ultimate timestamped proof of delivery tool for freelancers.
             </p>
 
             <span className="mt-6 flex items-center gap-2 text-[11px] font-mono text-zinc-400 dark:text-zinc-500">
               <span className="size-1 rounded-full bg-emerald-500" />
-              No credit card required · No hidden limits
+              No credit card required · No subscription · Pay only when you need more
             </span>
           </div>
         </section>
@@ -111,7 +115,11 @@ export default function PricingPage() {
             </div>
           </div>
         </section>
-        <FinalCTASection headline="Set up your first portal in under a minute." subtext="No card. No commitment. Your early access is protected." />
+
+        <FinalCTASection
+          headline="Set up your first portal in under a minute."
+          subtext="No card. No subscription. 3 free approvals every month."
+        />
       </main>
 
       <SiteFooter links={siteFooterLinks} />
