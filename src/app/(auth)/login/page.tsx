@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true }
 }
 
+
 export default function Login() {
   return (
     <main className="h-screen flex flex-col flex-1 items-center justify-center bg-zinc-50 dark:bg-zinc-950 transition-colors">
@@ -24,8 +25,8 @@ export default function Login() {
 
         <LoginForm />
 
-        <p className="text-xs text-zinc-500 dark:text-zinc-400 w-full text-center mt-4 leading-relaxed">
-          By continuing, you agree to VERORI's <br />
+        <p className="text-xs text-zinc-500 dark:text-zinc-400 w-full mx-auto max-w-[30ch] text-center mt-4 leading-relaxed ">
+          By continuing, you agree to VERORI&apos;s{' '}
           <Link
             href="/terms"
             className="underline decoration-zinc-300 dark:decoration-zinc-700 underline-offset-2 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors"
@@ -39,13 +40,21 @@ export default function Login() {
           >
             Privacy Policy
           </Link>
-          {", and "}
+          {", "}
           <Link
             href="/cookies"
             className="underline decoration-zinc-300 dark:decoration-zinc-700 underline-offset-2 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors"
           >
             Cookie Policy
-          </Link>.
+          </Link>
+          {", and "}
+          <Link
+            href="/refund"
+            className="underline decoration-zinc-300 dark:decoration-zinc-700 underline-offset-2 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors"
+          >
+            Refund Policy
+          </Link>
+          .
         </p>
         <p className="text-xs text-zinc-500 dark:text-zinc-400 w-full text-center mt-2 border-dashed border-t border-t-zinc-300 dark:border-t-zinc-700 pt-4">
           Having trouble logging in?{" "}
@@ -54,6 +63,7 @@ export default function Login() {
           </Link>
         </p>
       </div>
+
     </main>
   )
 }
