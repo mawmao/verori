@@ -23,7 +23,7 @@ export function CreatePortalDialog({ isIcon = false }: { isIcon?: boolean }) {
           <PlusIcon className="size-5" />
         </DialogTrigger>
       ) : (
-        <DialogTrigger as={Button} className="w-auto">
+        <DialogTrigger as={Button} className="gap-0 w-auto">
           <PlusIcon className="size-4 mr-2" />
           New Portal
         </DialogTrigger>

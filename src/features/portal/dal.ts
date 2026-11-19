@@ -141,10 +141,10 @@ export const getRecentActivity = cache(async () => {
 
   const { data, error } = await supabase
     .from("activity_event")
-    .select("id, type, created_at, portal!inner(id, title, client_name)")
+    .select("id, type, created_at, portal!inner(id, title, client_name, share_token)")
     .eq("portal.user_id", user.id)
     .order("created_at", { ascending: false })
-    .limit(5)
+    .limit(12)
 
   if (error) {
     console.error("Error fetching recent activity:", error)
