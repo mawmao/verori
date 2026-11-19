@@ -23,16 +23,20 @@ export function ActionBadge<T extends ElementType = "button">({
   return (
     <Component
       className={cn(
-        "flex items-center justify-center rounded-md font-medium transition-colors",
+        "inline-flex items-center justify-center rounded-md font-medium transition-all duration-200 active:scale-[0.98]",
         size === "default" && "gap-1.5 text-xs px-3 py-1.5",
-        size === "sm" && "gap-1 text-[11px] px-2 py-0.5",
-        variant === "primary" && "text-teal-800 bg-teal-100/60 border border-teal-200/50 hover:bg-teal-100 dark:text-teal-300 dark:bg-teal-900/40 dark:border-teal-800 dark:hover:bg-teal-900/60 cursor-pointer",
-        variant === "success" && "text-teal-800 bg-teal-100/60 border border-teal-200/50 dark:text-teal-300 dark:bg-teal-900/40 dark:border-teal-800 cursor-default",
+        size === "sm" && "gap-1 text-[11px] px-2.5 py-1",
+
+        variant === "primary" &&
+          "bg-zinc-100 text-zinc-700 hover:bg-zinc-200 hover:text-zinc-900 dark:bg-zinc-800/80 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:hover:text-zinc-50",
+        variant === "success" &&
+          "bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400 dark:hover:bg-emerald-900/50",
+
         className
       )}
       {...props}
     >
-      {icon}
+      {icon && <span className="flex items-center justify-center">{icon}</span>}
       {children}
     </Component>
   )

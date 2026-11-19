@@ -4,10 +4,12 @@ import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server"
 import { connection } from "next/server"
 import { CheckIcon } from "@/components/icon/check";
+import { TimelineItem } from "@/features/portal/components/timeline-item";
+import { FileEntry } from "@/components/file-entry";
 
 export function HeroSection() {
   return (
-    <section className="relative isolate w-full overflow-hidden pt-20 sm:pt-24">
+    <section id="hero" className="relative isolate w-full overflow-hidden pt-20 sm:pt-24">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div
           className="absolute inset-0 text-zinc-900/[0.07] dark:text-zinc-50/6"
@@ -117,55 +119,16 @@ function Mock() {
             </span>
           </div>
 
-          <div className="flex items-center justify-between rounded-lg border border-dashed border-zinc-300 bg-zinc-50/50 p-3 dark:border-zinc-700 dark:bg-zinc-900/30">
-            <div className="flex items-center gap-3 min-w-0">
-              <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-zinc-200 text-zinc-500 dark:bg-zinc-800">
-                <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-                </svg>
-              </div>
-              <div className="flex flex-col min-w-0">
-                <span className="truncate text-xs font-medium text-zinc-950 dark:text-zinc-50">Q3-SEO-Audit.pdf</span>
-                <span className="text-[10px] text-zinc-500 dark:text-zinc-400">2.40 MB</span>
-              </div>
-            </div>
-            <span className="inline-flex items-center gap-1 rounded bg-zinc-950 px-2 py-1 text-[9px] font-medium text-white dark:bg-zinc-50 dark:text-zinc-950">
-              Preview
-              <svg className="size-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-              </svg>
-            </span>
-          </div>
+          <FileEntry
+            file={{ name: "Q3-SEO-Audit.pdf", size: 2516582, mime_type: "application/pdf" }}
+            signedUrl="#hero"
+          />
 
-          <div className="rounded-lg border border-dashed border-zinc-300 p-3 dark:border-zinc-700">
-            <ul className="flex flex-col gap-2">
-              {[
-                { title: "Link created", time: "9:00 AM", dot: "bg-zinc-300 dark:bg-zinc-600", icon: <div className="size-1 rounded-full bg-white dark:bg-zinc-900" /> },
-                { title: "Viewed by client", time: "9:15 AM", dot: "bg-blue-500", icon: <div className="size-1 rounded-full bg-white" /> },
-                { title: "Approved", time: "10:30 AM", dot: "bg-emerald-600", icon: <CheckIcon className="size-2 text-white" /> },
-              ].map((event, i, arr) => {
-                const isLast = i === arr.length - 1
-                return (
-                  <li key={event.title} className="flex gap-2">
-                    <div className="flex flex-col items-center">
-                      <span className={`flex size-4 shrink-0 items-center justify-center rounded-full border-2 border-white dark:border-zinc-950 ${event.dot}`}>
-                        {event.icon}
-                      </span>
-                      {!isLast && <span className="w-[1.5px] flex-1 bg-zinc-200 dark:bg-zinc-800 my-0.5" />}
-                    </div>
-                    <div className={`flex-1 flex flex-col justify-center ${!isLast ? "pb-2" : ""}`}>
-                      <div className="flex items-center justify-between gap-2 h-3.5">
-                        <p className="text-[11px] font-medium capitalize leading-none text-zinc-700 dark:text-zinc-300">
-                          {event.title}
-                        </p>
-                        <time className="font-mono text-[9px] font-medium leading-none tracking-wide text-zinc-400 dark:text-zinc-500">
-                          {event.time}
-                        </time>
-                      </div>
-                    </div>
-                  </li>
-                )
-              })}
+          <div className="p-4 rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900/40">
+            <ul className="flex flex-col">
+              <TimelineItem title="created" timestamp="Nov 19, 9:00 AM" tone="neutral" />
+              <TimelineItem title="viewed" timestamp="Nov 19, 9:15 AM" tone="viewed" />
+              <TimelineItem title="approved" timestamp="Nov 19, 10:30 AM" tone="approved" isLast />
             </ul>
           </div>
         </div>
