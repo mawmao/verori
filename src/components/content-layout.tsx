@@ -1,6 +1,7 @@
 import { LandingHeader } from "@/app/_components/landing-header"
 import { SiteFooter } from "@/components/site-footer"
 import { FinalCTASection } from "@/app/_components/section-final-cta"
+import { siteFooterLinks } from "@/lib/links"
 
 interface ContentLayoutProps {
   category: string
@@ -9,14 +10,6 @@ interface ContentLayoutProps {
   children: React.ReactNode
 }
 
-const siteFooterLinks = [
-  { label: "Pricing", href: "/pricing" },
-  { label: "Contact", href: "/contact" },
-  { label: "Terms", href: "/terms" },
-  { label: "Refund", href: "/refund" },
-  { label: "Privacy", href: "/privacy" },
-  { label: "GitHub", href: "https://github.com/mawmao/verori" },
-]
 
 export function ContentLayout({ category, title, description, children }: ContentLayoutProps) {
   return (

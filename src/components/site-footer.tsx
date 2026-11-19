@@ -10,12 +10,14 @@ export function SiteFooter({ links }: SiteFooterProps) {
     <footer className="w-full border-t border-dashed border-zinc-300 bg-zinc-50 py-8 dark:border-zinc-800 dark:bg-zinc-950">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 sm:flex-row sm:justify-between">
 
-        <div className="flex flex-col gap-4">
-          <BrandLogo href="/" />
-          <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-xs">
-            Timestamped proof of delivery for freelancers. Stop chasing, start shipping.
-          </p>
-          <div className="flex gap-4 text-sm text-zinc-500 dark:text-zinc-400">
+        <div className="flex flex-col justify-between">
+          <div className="flex flex-col gap-2">
+            <BrandLogo href="/" />
+            <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-xs">
+              Timestamped proof of delivery for freelancers. Stop chasing, start shipping.
+            </p>
+          </div>
+          <div className="flex gap-4 text-xs text-zinc-500 dark:text-zinc-400">
             {links.map((link) => (
               <Link
                 key={link.label}

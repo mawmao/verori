@@ -4,6 +4,7 @@ import { SiteFooter } from "@/components/site-footer"
 import { CheckIcon } from "@/components/icon/check"
 import { FinalCTASection } from "../_components/section-final-cta"
 import { Metadata } from "next"
+import { siteFooterLinks } from "@/lib/links"
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -42,15 +43,6 @@ const faqJsonLd = {
     }
   }))
 }
-
-const siteFooterLinks = [
-  { label: "Pricing", href: "/pricing" },
-  { label: "Contact", href: "/contact" },
-  { label: "Terms", href: "/terms" },
-  { label: "Refund", href: "/refund" },
-  { label: "Privacy", href: "/privacy" },
-  { label: "GitHub", href: "https://github.com/mawmao/verori" },
-]
 
 export default function PricingPage() {
   return (

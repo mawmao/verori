@@ -32,7 +32,7 @@ export default function ContactClient() {
     <main className="min-h-screen flex flex-col items-center justify-center bg-zinc-50 dark:bg-zinc-950 texture-overlay py-12 px-6">
       <div className="max-w-xl flex flex-col gap-8">
         <Link
-          href="/login"
+          href="/"
           className="inline-flex gap-2 items-center text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors underline decoration-zinc-300 dark:decoration-zinc-700 underline-offset-4"
         >
           <ArrowLeftIcon /> Back
