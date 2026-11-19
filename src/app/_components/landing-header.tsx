@@ -1,6 +1,6 @@
 import Link from "next/link"
-import { Suspense } from "react";
-import { SiteHeader } from "@/components/site-header";
+import { Suspense } from "react"
+import { SiteHeader } from "@/components/site-header"
 import { Button } from "@/components/button"
 import { createClient } from "@/lib/supabase/server"
 import { connection } from "next/server"
@@ -26,7 +26,7 @@ export function LandingHeader() {
               <Button as={Link} href="/login" variant="ghost" className="w-auto">
                 Login
               </Button>
-              <Button as={Link} href="/login" className="w-auto px-4 py-2 text-xs">
+              <Button as={Link} href="/login" className="w-auto ml-2.5 px-6 py-2 text-xs">
                 Try for free
               </Button>
             </>
@@ -38,7 +38,6 @@ export function LandingHeader() {
     </SiteHeader>
   )
 }
-
 
 async function AuthButtons() {
   await connection()
