@@ -37,15 +37,15 @@ export function FinalCTASection({
         <div className="mt-8 flex w-full flex-col items-center gap-3 sm:w-auto">
           <Button
             as={Link}
-            href="/login"
+            href="/waitlist"
             className="w-full sm:w-auto px-10 py-3 text-base shadow-lg shadow-emerald-500/10 transition-shadow hover:shadow-emerald-500/20"
           >
-            Try Verori for free
+            Join the Waitlist
           </Button>
 
           <span className="flex items-center gap-2 text-[11px] font-mono text-zinc-400 dark:text-zinc-500">
             <span className="size-1 rounded-full bg-emerald-500" />
-            Free for solo consultants in public beta
+            Early access rolling out soon · Free to start
           </span>
         </div>
       </div>

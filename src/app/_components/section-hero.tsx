@@ -42,16 +42,18 @@ export function HeroSection() {
             Get a permanent, timestamped record for every deliverable. No client login required. Invoice faster with bulletproof proof of delivery.
           </p>
 
-          <Suspense fallback={
-            <div className="mt-8 flex w-full flex-col items-start gap-2 sm:w-auto">
-              <Button as={Link} href="/login" className="w-full sm:w-auto px-8 py-2.5 text-sm">
-                Try Verori
-              </Button>
-              <span className="text-[11px] text-zinc-400 dark:text-zinc-500">
-                Free to use. No credit card required.
-              </span>
-            </div>
-          }>
+          <Suspense
+            fallback={
+              <div className="mt-8 flex w-full flex-col items-start gap-2 sm:w-auto">
+                <Button as={Link} href="/waitlist" className="w-full sm:w-auto px-8 py-2.5 text-sm">
+                  Join the Waitlist
+                </Button>
+                <span className="text-[11px] text-zinc-400 dark:text-zinc-500">
+                  Early access opening soon. Free to start.
+                </span>
+              </div>
+            }
+          >
             <AuthCTA />
           </Suspense>
         </div>
@@ -82,11 +84,11 @@ async function AuthCTA() {
 
   return (
     <div className="mt-8 flex w-full flex-col items-start gap-2 sm:w-auto">
-      <Button as={Link} href="/login" className="w-full sm:w-auto px-8 py-2.5 text-sm">
-        Try Verori
+      <Button as={Link} href="/waitlist" className="w-full sm:w-auto px-8 py-2.5 text-sm">
+        Join the Waitlist
       </Button>
       <span className="text-[11px] text-zinc-400 dark:text-zinc-500">
-        Free to use. No credit card required.
+        Early access opening soon. Free to start.
       </span>
     </div>
   )
