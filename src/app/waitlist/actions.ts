@@ -50,10 +50,11 @@ export async function joinWaitlist(_prevState: WaitlistState, formData: FormData
   }
 
   if (!data.already_joined) {
+
     const templatePath = join(process.cwd(), "src", "emails", "waitlist-confirmation.html")
     let htmlTemplate = await readFile(templatePath, "utf-8")
 
-    htmlTemplate = htmlTemplate.replace("{{ email }}", rawEmail)
+    htmlTemplate = htmlTemplate.replace(/{{\s*email\s*}}/g, rawEmail)
 
     const emailPayload = {
       from: isDev ? "Verori <no-reply@mail.verori.local>" : "Verori <no-reply@mail.verori.app>",
