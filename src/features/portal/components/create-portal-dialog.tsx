@@ -12,8 +12,9 @@ import { useRef, useState } from "react"
 import { CloseIcon } from "@/components/icon/close"
 import { CheckCircleIcon } from "@/components/icon/check-circle"
 import { cn } from "@/components/util"
-
-const MAX_FILE_SIZE = 1 * 1024 * 1024
+import { MAX_UPLOAD_SIZE_BYTES, MAX_UPLOAD_SIZE_MB } from "../portal.constants"
+import { createClient } from "@/lib/supabase/client"
+import { getImageDimensions } from "@/lib/image"
 
 export function CreatePortalDialog({ isIcon = false }: { isIcon?: boolean }) {
   return (
@@ -48,14 +49,16 @@ export function CreatePortalDialog({ isIcon = false }: { isIcon?: boolean }) {
 function CreatePortalForm() {
   const [file, setFile] = useState<File | null>(null)
   const [fileError, setFileError] = useState<string | null>(null)
+  const [isPending, setIsPending] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFileError(null)
     if (e.target.files && e.target.files.length > 0) {
       const selectedFile = e.target.files[0]
-      if (selectedFile.size > MAX_FILE_SIZE) {
-        setFileError("File is too large. Maximum size is 1MB.")
+      if (selectedFile.size > MAX_UPLOAD_SIZE_BYTES) {
+        console.log(selectedFile.size, MAX_UPLOAD_SIZE_BYTES)
+        setFileError(`File is too large. Maximum size is ${MAX_UPLOAD_SIZE_MB}MB.`)
         setFile(null)
         if (fileInputRef.current) fileInputRef.current.value = ""
         return
@@ -70,11 +73,80 @@ function CreatePortalForm() {
     if (fileInputRef.current) fileInputRef.current.value = ""
   }
 
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+
+    e.preventDefault()
+    setIsPending(true)
+    setFileError(null)
+
+    const form = e.currentTarget
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) {
+      setFileError('Not authenticated')
+      setIsPending(false)
+      return
+    }
+
+    if (!file) {
+      setFileError('File is required')
+      setIsPending(false)
+      return
+    }
+
+    let metadata = {}
+    if (file.type.startsWith('image/')) {
+      try {
+        const dimensions = await getImageDimensions(file)
+        metadata = {
+          width: dimensions.width,
+          height: dimensions.height,
+          orientation: dimensions.width > dimensions.height ? 'landscape' : 'portrait'
+        }
+      } catch (err) {
+        console.error("Failed to parse image metadata", err)
+      }
+    }
+
+    const fileExt = file.name.split('.').pop()
+    const uniqueFilename = `${crypto.randomUUID()}.${fileExt}`
+    const storageKey = `${user.id}/${uniqueFilename}`
+
+    const { error: uploadError } = await supabase.storage
+      .from('deliverables')
+      .upload(storageKey, file)
+
+    if (uploadError) {
+      console.error(uploadError)
+      setFileError('Failed to upload file. Please try again.')
+      setIsPending(false)
+      return
+    }
+
+    const serverFormData = new FormData()
+    serverFormData.append('client_name', (form.elements.namedItem('client_name') as HTMLInputElement).value)
+    serverFormData.append('title', (form.elements.namedItem('title') as HTMLInputElement).value)
+    serverFormData.append('context_note', (form.elements.namedItem('context_note') as HTMLInputElement).value)
+
+    serverFormData.append('storage_key', storageKey)
+    serverFormData.append('file_name', file.name)
+    serverFormData.append('mime_type', file.type)
+    serverFormData.append('file_size', file.size.toString())
+    serverFormData.append('metadata', JSON.stringify(metadata))
+
+    try {
+      await createPortal(serverFormData)
+    } catch (err) {
+      setFileError(err instanceof Error ? err.message : 'Failed to create portal')
+      setIsPending(false)
+    }
+  }
+
   return (
-    <form action={createPortal} className="flex flex-col">
+    <form onSubmit={handleSubmit} className="flex flex-col">
       <div className="p-6 flex flex-col gap-5">
 
-        {/* Form Fields */}
         <div className="grid grid-cols-1 gap-4">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="client_name">Client Name</Label>
@@ -92,7 +164,6 @@ function CreatePortalForm() {
           </div>
         </div>
 
-        {/* Upload Area */}
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="file">Upload Deliverable</Label>
           <input
@@ -120,7 +191,7 @@ function CreatePortalForm() {
                 <span className="font-medium text-zinc-950 dark:text-zinc-50">Click to upload</span> or drag and drop
               </p>
               <p className="text-[10px] text-zinc-400 mt-1 uppercase tracking-wider">
-                PDF, JPG, PNG (max 1MB)
+                PDF, JPG, PNG (max {MAX_UPLOAD_SIZE_MB}MB)
               </p>
             </label>
           ) : (
@@ -132,7 +203,7 @@ function CreatePortalForm() {
                     {file.name}
                   </p>
                   <p className="text-[10px] font-mono text-zinc-500">
-                    {(file.size / 1024 / 1024).toFixed(2)} MB
+                    PDF, JPG, PNG (max {MAX_UPLOAD_SIZE_MB}MB)
                   </p>
                 </div>
               </div>
@@ -150,7 +221,6 @@ function CreatePortalForm() {
         </div>
       </div>
 
-      {/* Modal Footer: Solid border, subtle background */}
       <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/30">
         <DialogClose as={Button} type="button" variant="outline">
           Cancel

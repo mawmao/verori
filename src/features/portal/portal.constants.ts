@@ -1,5 +1,9 @@
 import { Status } from "./portal.types";
 
+export const MAX_UPLOAD_SIZE_BYTES = 4 * 1024 * 1024 // 4 MB
+
+export const MAX_UPLOAD_SIZE_MB = MAX_UPLOAD_SIZE_BYTES / (1024 * 1024)
+
 export const STATUS_ORDER: Status[] = ['sent', 'viewed', 'changes_requested', 'approved']
 
 export const STATUSES: { value: Status; label: string; dot: string; text: string; badge: string }[] = [
