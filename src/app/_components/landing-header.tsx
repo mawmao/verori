@@ -21,16 +21,13 @@ export function LandingHeader() {
           </Button>
         </div>
         <div className="flex items-center gap-2">
-          <Suspense fallback={
-            <>
-              <Button as={Link} href="/login" variant="ghost" className="w-auto">
-                Login
+          <Suspense
+            fallback={
+              <Button as={Link} href="/waitlist" className="w-auto px-5 py-2 text-xs">
+                Join Waitlist
               </Button>
-              <Button as={Link} href="/login" className="w-auto ml-2.5 px-6 py-2 text-xs">
-                Try for free
-              </Button>
-            </>
-          }>
+            }
+          >
             <AuthButtons />
           </Suspense>
         </div>
@@ -53,13 +50,8 @@ async function AuthButtons() {
   }
 
   return (
-    <>
-      <Button as={Link} href="/login" variant="ghost" className="w-auto">
-        Login
-      </Button>
-      <Button as={Link} href="/login" className="w-auto ml-2.5 px-6 py-2 text-xs">
-        Try for free
-      </Button>
-    </>
+    <Button as={Link} href="/waitlist" className="w-auto px-5 py-2 text-xs">
+      Join Waitlist
+    </Button>
   )
 }

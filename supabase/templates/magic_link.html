@@ -2,125 +2,145 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="x-apple-disable-message-reformatting">
-    <title>Login to Verori</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <title>Sign in to Verori</title>
 </head>
 
 <body
-    style="margin:0;padding:0;background-color:#fafafa;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#09090b;-webkit-font-smoothing:antialiased;">
-    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"
-        style="border-collapse:collapse;background-color:#fafafa;">
-        <tr>
-            <td align="center" style="padding:64px 20px 40px;">
-                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"
-                    style="width:100%;max-width:480px;border-collapse:collapse;">
+  style="margin:0;padding:0;background-color:#fafafa;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#09090b;-webkit-font-smoothing:antialiased;">
 
-                    <!-- Logo & Brand Name -->
-                    <tr>
-                        <td style="padding:0 0 32px;">
-                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="border-collapse:collapse;">
-                                <tr>
-                                    <td style="vertical-align:middle; padding-right:12px;">
-                                        <img src="https://raw.githubusercontent.com/mawmao/verori/main/public/web-app-manifest-512x512.png"
-                                             alt=""
-                                             width="32"
-                                             height="32"
-                                             style="display:block; border:0; border-radius:6px;" />
-                                    </td>
-                                    <td style="vertical-align:middle; font-size:24px; line-height:32px; font-weight:700; color:#09090b; letter-spacing:-0.05em; text-transform:uppercase;">
-                                        Verori
-                                    </td>
-                                </tr>
-                            </table>
+  <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;">
+    Your Verori sign-in code is {{ .Token }} — or use the one-click link inside.
+    &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+  </div>
+
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"
+    style="border-collapse:collapse;background-color:#fafafa;">
+    <tr>
+      <td align="center" style="padding:48px 16px 40px;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"
+          style="width:100%;max-width:480px;border-collapse:collapse;">
+
+          <tr>
+            <td style="padding:0 0 24px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"
+                style="border-collapse:collapse;">
+                <tr>
+                  <td style="vertical-align:middle;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0"
+                      style="border-collapse:collapse;">
+                      <tr>
+                        <td style="vertical-align:middle;padding-right:10px;">
+                          <img src="https://verori.app/web-app-manifest-512x512.png" alt="Verori" width="28" height="28"
+                            style="display:block;border:0;border-radius:6px;" />
                         </td>
-                    </tr>
-
-                    <!-- Heading -->
-                    <tr>
-                        <td style="padding:0 0 12px;font-size:20px;line-height:28px;font-weight:600;color:#09090b;">
-                            Sign in to your account
-                        </td>
-                    </tr>
-
-                    <!-- Subtitle -->
-                    <tr>
-                        <td style="padding:0 0 24px;font-size:14px;line-height:22px;color:#52525b;">
-                            Use the 6-digit code below, or click the secure link to access your dashboard.
-                        </td>
-                    </tr>
-
-                    <!-- Token Code Block -->
-                    <tr>
-                        <td align="center" style="padding:0 0 24px;">
-                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"
-                                style="border-collapse:separate;background-color:#ffffff;border:1px solid #e4e4e7;border-radius:6px;">
-                                <tr>
-                                    <td align="center"
-                                        style="padding:16px;font-size:24px;line-height:36px;font-weight:600;color:#09090b;font-family:'Courier New',Courier,monospace;">
-                                        <span style="display:inline-block;letter-spacing:8px;margin-right:-8px;">
-                                            {{- .Token -}}
-                                        </span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-                    <!-- Divider -->
-                    <tr>
-                        <td align="center" style="padding:0 0 24px;">
-                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
-                                <tr>
-                                    <td style="width:45%;border-bottom:1px solid #e4e4e7;"></td>
-                                    <td
-                                        style="width:10%;text-align:center;font-size:10px;color:#a1a1aa;text-transform:uppercase;letter-spacing:1px;padding:0 10px;">
-                                        or</td>
-                                    <td style="width:45%;border-bottom:1px solid #e4e4e7;"></td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-                    <!-- Magic Link Button -->
-                    <tr>
-                        <td align="center" style="padding:0 0 32px;">
-                            <table role="presentation" cellspacing="0" cellpadding="0" border="0"
-                                style="border-collapse:separate;width:100%;">
-                                <tr>
-                                    <td align="center" bgcolor="#09090b" style="border-radius:6px;">
-                                        <a href="{{ .ConfirmationURL }}" target="_blank"
-                                            style="display:block;padding:14px 20px;font-size:14px;line-height:16px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:6px;">
-                                            Sign in with Magic Link
-                                        </a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-                    <!-- Security Note -->
-                    <tr>
-                        <td style="padding:0 0 32px;font-size:13px;line-height:20px;color:#71717a;">
-                            Never share this code with anyone. If you didn’t request this email, you can safely ignore
-                            it.
-                        </td>
-                    </tr>
-
-                    <!-- Footer -->
-                    <tr>
                         <td
-                            style="font-size:12px;line-height:18px;color:#a1a1aa;border-top:1px solid #e4e4e7;padding-top:24px;">
-                            <strong style="color:#52525b;">VERORI</strong> — Client sign-off for solo consultants.<br>
-                            A timestamped record of when it was sent, viewed, approved, or left unanswered.
+                          style="vertical-align:middle;font-size:18px;line-height:24px;font-weight:700;color:#09090b;letter-spacing:-0.04em;text-transform:uppercase;">
+                          Verori
                         </td>
-                    </tr>
-
-                </table>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
             </td>
-        </tr>
-    </table>
+          </tr>
+
+          <tr>
+            <td>
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"
+                style="width:100%;border-collapse:separate;background-color:#ffffff;border:1px solid #e4e4e7;border-radius:12px;">
+
+                <tr>
+                  <td style="padding:28px 28px 20px;border-bottom:1px dashed #e4e4e7;">
+                    <h1
+                      style="margin:0 0 8px;font-size:22px;line-height:28px;font-weight:600;letter-spacing:-0.03em;color:#09090b;">
+                      Sign in to your workspace
+                    </h1>
+                    <p style="margin:0;font-size:14px;line-height:21px;color:#71717a;">
+                      Click the button below for instant access, or enter the 6-digit verification code on the login screen.
+                    </p>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="padding:24px 28px;">
+
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"
+                      style="border-collapse:separate;width:100%;">
+                      <tr>
+                        <td align="center" bgcolor="#09090b" style="border-radius:6px;">
+                          <a href="{{ .ConfirmationURL }}" target="_blank"
+                            style="display:block;padding:13px 20px;font-size:14px;line-height:18px;font-weight:600;color:#fafafa;text-decoration:none;border-radius:6px;">
+                            Sign in to Verori &rarr;
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"
+                      style="margin:22px 0;">
+                      <tr>
+                        <td style="width:38%;border-bottom:1px dashed #e4e4e7;"></td>
+                        <td
+                          style="width:24%;text-align:center;font-family:'Courier New',Courier,monospace;font-size:10px;line-height:14px;color:#a1a1aa;text-transform:uppercase;letter-spacing:0.08em;padding:0 8px;">
+                          or enter code
+                        </td>
+                        <td style="width:38%;border-bottom:1px dashed #e4e4e7;"></td>
+                      </tr>
+                    </table>
+
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"
+                      style="border-collapse:separate;width:100%;background-color:#fafafa;border:1px dashed #d4d4d8;border-radius:8px;">
+                      <tr>
+                        <td align="center" style="padding:16px 12px;">
+                          <div
+                            style="font-family:'Courier New',Courier,monospace;font-size:28px;line-height:34px;font-weight:700;color:#09090b;letter-spacing:10px;margin-right:-10px;">
+                            {{- .Token -}}
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin:20px 0 0;font-size:12px;line-height:18px;color:#71717a;">
+                      Button not working? Paste this link into your browser:<br>
+                      <a href="{{ .ConfirmationURL }}" target="_blank"
+                        style="color:#059669;text-decoration:underline;word-break:break-all;font-family:'Courier New',Courier,monospace;font-size:11px;">
+                        {{ .ConfirmationURL }}
+                      </a>
+                    </p>
+
+                  </td>
+                </tr>
+
+                <tr>
+                  <td
+                    style="padding:16px 28px;background-color:#fafafa;border-top:1px dashed #e4e4e7;border-bottom-left-radius:12px;border-bottom-right-radius:12px;">
+                    <p style="margin:0;font-size:12px;line-height:18px;color:#71717a;">
+                      Never share this code or link with anyone. If you didn&rsquo;t request this sign-in, you can safely ignore this email.
+                    </p>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:24px 4px 0;font-size:12px;line-height:18px;color:#a1a1aa;">
+              <strong style="color:#52525b;letter-spacing:0.04em;">VERORI</strong> &mdash; Timestamped proof of delivery for freelancers.<br>
+              Stop chasing clients for sign-offs.
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
 
 </html>

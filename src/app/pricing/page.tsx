@@ -125,7 +125,8 @@ export default function PricingPage() {
 
         <FinalCTASection
           headline="Set up your first portal in under a minute."
-          subtext="No card. No subscription. 3 free approvals every month."
+          // subtext="No card. No subscription. 3 free approvals every month."
+          subtext="Join the waitlist for early access · 3 free approvals every month once live."
         />
       </main>
 
