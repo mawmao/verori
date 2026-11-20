@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/button"
 import { Dialog, DialogTrigger, DialogContent, DialogClose } from "@/components/dialog"
-import { useFormStatus } from "react-dom"
 import { createPortal } from "@/features/portal/actions"
 import { Input } from "@/components/input"
 import { Label } from "@/components/label"
@@ -15,10 +14,19 @@ import { cn } from "@/components/util"
 import { MAX_UPLOAD_SIZE_BYTES, MAX_UPLOAD_SIZE_MB } from "../portal.constants"
 import { createClient } from "@/lib/supabase/client"
 import { getImageDimensions } from "@/lib/image"
+import { useRouter } from "next/navigation"
 
 export function CreatePortalDialog({ isIcon = false }: { isIcon?: boolean }) {
+  const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter()
+
+  const handleSuccess = (shareToken: string) => {
+    setIsOpen(false)
+    router.push(`/dashboard?portal=${shareToken}`)
+  }
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       {isIcon ? (
         <DialogTrigger as={Button} variant="ghost" aria-label="Create New Portal">
           <PlusIcon className="size-5" />
@@ -40,13 +48,13 @@ export function CreatePortalDialog({ isIcon = false }: { isIcon?: boolean }) {
           </p>
         </div>
 
-        <CreatePortalForm />
+        <CreatePortalForm onSuccess={handleSuccess} />
       </DialogContent>
     </Dialog>
   )
 }
 
-function CreatePortalForm() {
+function CreatePortalForm({ onSuccess }: { onSuccess: (token: string) => void }) {
   const [file, setFile] = useState<File | null>(null)
   const [fileError, setFileError] = useState<string | null>(null)
   const [isPending, setIsPending] = useState(false)
@@ -136,7 +144,11 @@ function CreatePortalForm() {
     serverFormData.append('metadata', JSON.stringify(metadata))
 
     try {
-      await createPortal(serverFormData)
+      const { success, shareToken } = await createPortal(serverFormData)
+      if (success) {
+        onSuccess(shareToken)
+      }
+
     } catch (err) {
       setFileError(err instanceof Error ? err.message : 'Failed to create portal')
       setIsPending(false)
@@ -225,17 +237,10 @@ function CreatePortalForm() {
         <DialogClose as={Button} type="button" variant="outline">
           Cancel
         </DialogClose>
-        <SubmitButton disabled={!!fileError} />
+        <Button type="submit" disabled={isPending || !!fileError} isLoading={isPending}>
+          {isPending ? "Creating..." : "Create & Generate Link"}
+        </Button>
       </div>
     </form>
-  )
-}
-
-function SubmitButton({ disabled }: { disabled?: boolean }) {
-  const { pending } = useFormStatus()
-  return (
-    <Button type="submit" disabled={pending || disabled} isLoading={pending}>
-      {pending ? "Creating..." : "Create & Generate Link"}
-    </Button>
   )
 }

@@ -64,5 +64,8 @@ export async function createPortal(formData: FormData) {
   }
 
   revalidatePath('/dashboard')
-  redirect(`/dashboard?portal=${portal.share_token}`)
+  return {
+    success: true,
+    shareToken: portal.share_token
+  }
 }
